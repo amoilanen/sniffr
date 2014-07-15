@@ -1,0 +1,26 @@
+{
+  "name": "sniffr",
+  "version": "0.1.0",
+  "description": "Pure JavaScript browser and OS detection in browser",
+  "homepage": "https://github.com/antivanov/sniffr",
+  "authors": [
+    "Anton Ivanov <anton.al.ivanov@gmail.com>"
+  ],
+  "keywords": [
+    "browser sniffing",
+    "os detection",
+    "sniffing",
+    "detection",
+    "browser-sniffing",
+    "os-detection"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "devDependencies": {
+    "jasmine": "~2.0.0"
+  }
+}
