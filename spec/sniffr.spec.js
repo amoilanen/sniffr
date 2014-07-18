@@ -51,9 +51,11 @@ describe("sniffr", function() {
   //TODO: Firefox
   //"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0"
   //TODO: Chrome
+  //"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36"
   //TODO: Safari
 
   //TODO: No user agent string available
   //TODO: Unknown agent string
   //TODO: No analysis has been run before getting the properties
+  //TODO: Recognition of whether the device is mobile or not
 });

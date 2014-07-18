@@ -1,3 +1,22 @@
+if (!Array.prototype.map) {
+  Array.prototype.map = function(callback, thisArg) {
+    var mapped = [];
+
+    for (var i = 0; i < this.length; i++) {
+      mapped.push(callback.call(thisArg, this[i], i, this));
+    }
+    return mapped;
+  };
+}
+
+if (!Array.prototype.forEach) {
+  Array.prototype.forEach = function(callback, thisArg) {
+    for (var i = 0; i < this.length; i++) {
+      callback.call(thisArg, this[i], i, this);
+    }
+  };
+}
+
 (function(host) {
 
   var UNKNOWN_PROPERTY = {
@@ -22,11 +41,9 @@
   }
 
   function determineProperty(self, propertyName, userAgent) {
-    var propertyMatchers = matchers[propertyName];
-
-    for (var i = 0; i < propertyMatchers.length; i++) {
-      var propertyRegex = propertyMatchers[i][0];
-      var propertyValue = propertyMatchers[i][1];
+    matchers[propertyName].forEach(function(propertyMatcher) {
+      var propertyRegex = propertyMatcher[0];
+      var propertyValue = propertyMatcher[1];
 
       var match = userAgent.match(propertyRegex);
 
@@ -37,17 +54,13 @@
           version: parseVersion(match[1])
         };
       }
-    }
+    });
   };
 
   function parseVersion(versionString) {
-    var versionParts = versionString.split(/[\._]/);
-    var version = [];
-
-    for (var i = 0; i < versionParts.length; i++) {
-      version.push(parseInt(versionParts[i]));
-    }
-    return version;
+    return versionString.split(/[\._]/).map(function(versionPart) {
+      return parseInt(versionPart);
+    });
   }
 
   Sniffr.prototype.sniff = function(userAgentString) {
