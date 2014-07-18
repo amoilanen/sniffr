@@ -18,7 +18,7 @@ module.exports = function (grunt)
         newcap: true,
         noarg: true,
         sub: true,
-        undef: true,
+        undef: false,
         boss: true,
         eqnull: true
       }

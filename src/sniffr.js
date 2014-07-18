@@ -28,10 +28,14 @@ if (!Array.prototype.forEach) {
   var matchers = {
     browser: [
       [/msie ([\.\_\d]+)/, "ie"],
-      [/trident\/.*?rv:([\.\_\d]+)/, "ie"]
+      [/trident\/.*?rv:([\.\_\d]+)/, "ie"],
+      [/firefox\/([\.\_\d]+)/, "firefox"]
     ],
     os: [
-      [/windows nt ([\.\_\d]+)/, "windows"]
+      [/windows nt ([\.\_\d]+)/, "windows"],
+      [/linux ()([a-z\.\_\d]+)/, "linux"],
+      [/mac os.*?([\.\_\d]+)/, "macos"],
+      [/openbsd ()([a-z\.\_\d]+)/, "openbsd"]
     ]
   };
 
@@ -50,12 +54,12 @@ if (!Array.prototype.forEach) {
       if (match) {
         self[propertyName] = {
           name: propertyValue,
-          versionString: match[1],
-          version: parseVersion(match[1])
+          versionString: match[2] || match[1],
+          version: match[2] ? [] : parseVersion(match[1])
         };
       }
     });
-  };
+  }
 
   function parseVersion(versionString) {
     return versionString.split(/[\._]/).map(function(versionPart) {
@@ -64,15 +68,12 @@ if (!Array.prototype.forEach) {
   }
 
   Sniffr.prototype.sniff = function(userAgentString) {
-    var userAgentString = userAgentString || navigator.userAgent;
+    var self = this;
+    var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
 
-    if (!userAgentString) {
-      return;
-    }
-    userAgentString = userAgentString.toLowerCase();
-
-    determineProperty(this, "os", userAgentString);
-    determineProperty(this, "browser", userAgentString);
+    ["os", "browser"].forEach(function(propertyName) {
+      determineProperty(self, propertyName, userAgent);
+    });
   };
 
   Sniffr.prototype.getBrowser = function() {
