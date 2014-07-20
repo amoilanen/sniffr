@@ -73,8 +73,16 @@ describe("sniffr", function() {
       "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.7) Gecko/2009031120 Mandriva Firefox/3.0.7");
   });
 
-  //TODO: Chrome
-  //"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36"
+  describe("Chrome", function() {
+    shouldDetect(os("windows", "6.2"), browser("chrome", "32.0.1667.0"),
+      "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+    shouldDetect(os("macos", "10.8.3"), browser("chrome", "27.0.1453.93"),
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36");
+    shouldDetect(os("linux", "x86_64"), browser("chrome", "30.0.1599.66"),
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36");
+    shouldDetect(os("windows", "5.1"), browser("chrome", "3.0.191.0"),
+      "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.0 (KHTML, like Gecko) Chrome/3.0.191.0 Safari/531.0");
+  });
 
   //TODO: Safari
 

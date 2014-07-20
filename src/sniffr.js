@@ -29,7 +29,8 @@ if (!Array.prototype.forEach) {
     browser: [
       [/msie ([\.\_\d]+)/, "ie"],
       [/trident\/.*?rv:([\.\_\d]+)/, "ie"],
-      [/firefox\/([\.\_\d]+)/, "firefox"]
+      [/firefox\/([\.\_\d]+)/, "firefox"],
+      [/chrome\/([\.\_\d]+)/, "chrome"]
     ],
     os: [
       [/windows nt ([\.\_\d]+)/, "windows"],
@@ -54,7 +55,7 @@ if (!Array.prototype.forEach) {
       if (match) {
         self[propertyName] = {
           name: propertyValue,
-          versionString: match[2] || match[1],
+          versionString: match[2] || match[1].replace(/_/g, "."),
           version: match[2] ? [] : parseVersion(match[1])
         };
       }
