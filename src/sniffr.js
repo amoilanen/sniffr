@@ -30,12 +30,15 @@ if (!Array.prototype.forEach) {
       [/msie ([\.\_\d]+)/, "ie"],
       [/trident\/.*?rv:([\.\_\d]+)/, "ie"],
       [/firefox\/([\.\_\d]+)/, "firefox"],
-      [/chrome\/([\.\_\d]+)/, "chrome"]
+      [/chrome\/([\.\_\d]+)/, "chrome"],
+      [/version\/([\.\_\d]+).*?safari/, "safari"],
+      [/mobile safari ([\.\_\d]+)/, "safari"]
     ],
     os: [
       [/windows nt ([\.\_\d]+)/, "windows"],
       [/linux ()([a-z\.\_\d]+)/, "linux"],
       [/mac os.*?([\.\_\d]+)/, "macos"],
+      [/os ([\.\_\d]+) like mac os/, "ios"],
       [/openbsd ()([a-z\.\_\d]+)/, "openbsd"]
     ]
   };

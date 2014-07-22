@@ -84,12 +84,23 @@ describe("sniffr", function() {
       "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.0 (KHTML, like Gecko) Chrome/3.0.191.0 Safari/531.0");
   });
 
-  //TODO: Safari
+  describe("Safari", function() {
+    shouldDetect(os("windows", "6.1"), browser("safari", "4.0.5"),
+      "Mozilla/5.0 (Windows; U; Windows NT 6.1; es-ES) AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7");
+    shouldDetect(os("linux", "i686"), browser("safari", "1.1.3"),
+      "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.3) Gecko/2008092816 Mobile Safari 1.1.3");
+    shouldDetect(os("ios", "6.0"), browser("safari", "6.0"),
+      "Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25");
+    shouldDetect(os("windows", "5.1"), browser("safari", "5.0.3"),
+      "Mozilla/5.0 (Windows; U; Windows NT 5.1; it-IT) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4");
+    shouldDetect(os("ios", "3.2"), browser("safari", "4.0.4"),
+      "Mozilla/5.0 (iPhone; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10");
+  });
 
   //TODO: No user agent string available
   //TODO: Unknown agent string
   //TODO: No analysis has been run before getting the properties
   //TODO: Recognition of whether the device is mobile or not
-  //TODO: Recognize iOS/Android
+  //TODO: Recognize iOS/Android/Galaxy Tab
   //TODO: Recognize device orientation: portrait and landscape
 });
