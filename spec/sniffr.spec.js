@@ -55,21 +55,15 @@ describe("sniffr", function() {
         sniffer.sniff(agentString);
       });
 
-      if (options.os) {
-        it("it should recognize os", function() {
-          expect(sniffer.getOS()).toEqual(options.os);
-        });
-      }
-      if (options.browser) {
-        it("it should recognize browser", function() {
-          expect(sniffer.getBrowser()).toEqual(options.browser);
-        });
-      }
-      if (options.device) {
-        it("it should recognize device", function() {
-          expect(sniffer.getDevice()).toEqual(options.device);
-        });
-      }
+      ["os", "browser", "device"].forEach(function(propertyName) {
+        if (options[propertyName]) {
+          var getterName = "get" + propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
+
+          it("it should recognize " + propertyName, function() {
+            expect(sniffer[getterName]()).toEqual(options[propertyName]);
+          });
+        }
+      });
     });
   };
 

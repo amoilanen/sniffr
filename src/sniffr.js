@@ -17,9 +17,22 @@ if (!Array.prototype.forEach) {
   };
 }
 
+if (!Object.keys) {
+  Object.keys = function(obj) {
+    var ownKeys = [];
+
+    for (var propertyName in obj) {
+      if (obj.hasOwnProperty(propertyName)) {
+        ownKeys.push(propertyName);
+      }
+    }
+    return ownKeys;
+  };
+}
+
 (function(host) {
 
-  var matchers = {
+  var properties = {
     browser: [
       [/msie ([\.\_\d]+)/, "ie"],
       [/trident\/.*?rv:([\.\_\d]+)/, "ie"],
@@ -41,22 +54,22 @@ if (!Array.prototype.forEach) {
     ]
   };
 
-  function Sniffr() {
-    this.browser = getDefaultProperty();
-    this.os = getDefaultProperty();
-    this.device = getDefaultProperty();
-  }
+  var propertyNames = Object.keys(properties);
 
-  function getDefaultProperty() {
-    return {
-      name: "Unknown",
-      version: [],
-      versionString: "Unknown"
-    };
+  function Sniffr() {
+    var self = this;
+
+    propertyNames.forEach(function(propertyName) {
+      self[propertyName] = {
+        name: "Unknown",
+        version: [],
+        versionString: "Unknown"
+      };
+    });
   }
 
   function determineProperty(self, propertyName, userAgent) {
-    matchers[propertyName].forEach(function(propertyMatcher) {
+    properties[propertyName].forEach(function(propertyMatcher) {
       var propertyRegex = propertyMatcher[0];
       var propertyValue = propertyMatcher[1];
 
@@ -86,22 +99,18 @@ if (!Array.prototype.forEach) {
     var self = this;
     var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
 
-    ["os", "browser", "device"].forEach(function(propertyName) {
+    propertyNames.forEach(function(propertyName) {
       determineProperty(self, propertyName, userAgent);
     });
   };
 
-  Sniffr.prototype.getBrowser = function() {
-    return this.browser;
-  };
+  propertyNames.forEach(function(propertyName) {
+    var getterName = "get" + propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
 
-  Sniffr.prototype.getOS = function() {
-    return this.os;
-  };
-
-  Sniffr.prototype.getDevice = function() {
-    return this.device;
-  };
+    Sniffr.prototype[getterName] = function() {
+      return this[propertyName];
+    };
+  });
 
   host.Sniffr = Sniffr;
 })(this);
