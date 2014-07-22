@@ -32,6 +32,10 @@ describe("sniffr", function() {
     return property(name, versionString);
   }
 
+  function device(name) {
+    return property(name, "Unknown");
+  }
+
   function shouldDetect(options, agentString) {
     var specName = "recognition";
 
@@ -41,17 +45,31 @@ describe("sniffr", function() {
     if (options.browser) {
       specName += ", browser " + options.browser.name + " " + options.browser.versionString;
     }
+    if (options.device) {
+      specName += ", device " + options.device.name;
+    }
 
     describe(specName, function() {
-      it("it should recognize", function() {
+
+      beforeEach(function() {
         sniffer.sniff(agentString);
-        if (options.os) {
-          expect(sniffer.getOS()).toEqual(options.os);
-        }
-        if (options.browser) {
-          expect(sniffer.getBrowser()).toEqual(options.browser);
-        }
       });
+
+      if (options.os) {
+        it("it should recognize os", function() {
+          expect(sniffer.getOS()).toEqual(options.os);
+        });
+      }
+      if (options.browser) {
+        it("it should recognize browser", function() {
+          expect(sniffer.getBrowser()).toEqual(options.browser);
+        });
+      }
+      if (options.device) {
+        it("it should recognize device", function() {
+          expect(sniffer.getDevice()).toEqual(options.device);
+        });
+      }
     });
   };
 
@@ -99,11 +117,11 @@ describe("sniffr", function() {
       "Mozilla/5.0 (Windows; U; Windows NT 6.1; es-ES) AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7");
     shouldDetect({os: os("linux", "i686"), browser: browser("safari", "1.1.3")},
       "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.3) Gecko/2008092816 Mobile Safari 1.1.3");
-    shouldDetect({os: os("ios", "6.0"), browser: browser("safari", "6.0")},
+    shouldDetect({os: os("ios", "6.0"), browser: browser("safari", "6.0"), device: device("ipad")},
       "Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25");
     shouldDetect({os: os("windows", "5.1"), browser: browser("safari", "5.0.3")},
       "Mozilla/5.0 (Windows; U; Windows NT 5.1; it-IT) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4");
-    shouldDetect({os: os("ios", "3.2"), browser: browser("safari", "4.0.4")},
+    shouldDetect({os: os("ios", "3.2"), browser: browser("safari", "4.0.4"), device: device("iphone")},
       "Mozilla/5.0 (iPhone; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10");
   });
 

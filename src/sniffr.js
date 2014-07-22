@@ -19,12 +19,6 @@ if (!Array.prototype.forEach) {
 
 (function(host) {
 
-  var UNKNOWN_PROPERTY = {
-    name: "Unknown",
-    version: [],
-    versionString: "Unknown"
-  };
-
   var matchers = {
     browser: [
       [/msie ([\.\_\d]+)/, "ie"],
@@ -40,12 +34,25 @@ if (!Array.prototype.forEach) {
       [/mac os.*?([\.\_\d]+)/, "macos"],
       [/os ([\.\_\d]+) like mac os/, "ios"],
       [/openbsd ()([a-z\.\_\d]+)/, "openbsd"]
+    ],
+    device: [
+      [/ipad/, "ipad"],
+      [/iphone/, "iphone"]
     ]
   };
 
   function Sniffr() {
-    this.browser = UNKNOWN_PROPERTY;
-    this.os = UNKNOWN_PROPERTY;
+    this.browser = getDefaultProperty();
+    this.os = getDefaultProperty();
+    this.device = getDefaultProperty();
+  }
+
+  function getDefaultProperty() {
+    return {
+      name: "Unknown",
+      version: [],
+      versionString: "Unknown"
+    };
   }
 
   function determineProperty(self, propertyName, userAgent) {
@@ -56,11 +63,15 @@ if (!Array.prototype.forEach) {
       var match = userAgent.match(propertyRegex);
 
       if (match) {
-        self[propertyName] = {
-          name: propertyValue,
-          versionString: match[2] || match[1].replace(/_/g, "."),
-          version: match[2] ? [] : parseVersion(match[1])
-        };
+        self[propertyName].name = propertyValue;
+
+        if (match[2]) {
+          self[propertyName].versionString = match[2];
+          self[propertyName].version = [];
+        } else if (match[1]) {
+          self[propertyName].versionString = match[1].replace(/_/g, ".");
+          self[propertyName].version = parseVersion(match[1]);
+        }
       }
     });
   }
@@ -75,7 +86,7 @@ if (!Array.prototype.forEach) {
     var self = this;
     var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
 
-    ["os", "browser"].forEach(function(propertyName) {
+    ["os", "browser", "device"].forEach(function(propertyName) {
       determineProperty(self, propertyName, userAgent);
     });
   };
@@ -86,6 +97,10 @@ if (!Array.prototype.forEach) {
 
   Sniffr.prototype.getOS = function() {
     return this.os;
+  };
+
+  Sniffr.prototype.getDevice = function() {
+    return this.device;
   };
 
   host.Sniffr = Sniffr;
