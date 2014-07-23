@@ -7,18 +7,25 @@
       [/firefox\/([\.\_\d]+)/, "firefox"],
       [/chrome\/([\.\_\d]+)/, "chrome"],
       [/version\/([\.\_\d]+).*?safari/, "safari"],
-      [/mobile safari ([\.\_\d]+)/, "safari"]
+      [/mobile safari ([\.\_\d]+)/, "safari"],
+      [/android.*?version\/([\.\_\d]+).*?safari/, "com.android.browser"],
+      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"]
     ],
     os: [
       [/windows nt ([\.\_\d]+)/, "windows"],
       [/linux ()([a-z\.\_\d]+)/, "linux"],
       [/mac os.*?([\.\_\d]+)/, "macos"],
       [/os ([\.\_\d]+) like mac os/, "ios"],
-      [/openbsd ()([a-z\.\_\d]+)/, "openbsd"]
+      [/openbsd ()([a-z\.\_\d]+)/, "openbsd"],
+      [/android ([a-z\.\_\d]+);/, "android"],
+      [/android/, "android"]
     ],
     device: [
       [/ipad/, "ipad"],
-      [/iphone/, "iphone"]
+      [/iphone/, "iphone"],
+      [/htc/, "htc"],
+      [/nexus/, "nexus"],
+      [/galaxy nexus/, "galaxy.nexus"]
     ]
   };
 

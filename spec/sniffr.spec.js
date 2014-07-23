@@ -119,6 +119,68 @@ describe("sniffr", function() {
       "Mozilla/5.0 (iPhone; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10");
   });
 
+  describe("Android", function() {
+    shouldDetect(
+      {
+        os: os("android", "2.2"), 
+        browser: browser("com.android.browser", "4.0"), 
+        device: device("htc")
+      },
+      "Mozilla/5.0 (Linux; U; Android 2.2; fr-lu; HTC Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
+    shouldDetect(
+      {
+        os: os("android", "armv7l"),
+        browser: browser("firefox", "9.0")
+      },
+      "Mozilla/5.0 (Android; Linux armv7l; rv:9.0) Gecko/20111216 Firefox/9.0 Fennec/9.0");
+    shouldDetect(
+      {
+        os: os("android", "armv7l"),
+        browser: browser("firefox", "5.0")
+      },
+      "Mozilla/5.0 (Android; Linux armv7l; rv:5.0) Gecko/20110614 Firefox/5.0 Fennec/5.0");
+    shouldDetect(
+      {
+        os: os("android", "Unknown"),
+        browser: browser("opera.mini", "11.10")
+      },
+      "Opera/9.80 (Android; Opera Mini/7.0.29952/28.2075; U; es) Presto/2.8.119 Version/11.10");
+    shouldDetect(
+      {
+        os: os("android", "4.0.4"),
+        browser: browser("chrome", "18.0.1025.133"),
+        device: device("galaxy.nexus")
+      },
+      "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19");
+    shouldDetect(
+      {
+        os: os("android", "4.1.1"),
+        browser: browser("com.android.browser", "4.0")
+      },
+      "Mozilla/5.0 (Linux; U; Android 4.1.1; en-gb; Build/KLP) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30");
+    shouldDetect(
+      {
+        os: os("android", "4.4"),
+        browser: browser("com.android.browser", "4.0"),
+        device: device("nexus")
+      },
+      "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36");
+
+  });
+
+  //iOS
+  //Chrome iOS
+  //Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/7534.48.3
+  //Safari iOS
+  //Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543 Safari/419.3
+
+  //Windows mobile
+  //Opera mini
+  //Opera/9.80 (Windows Mobile; Opera Mini/5.1.21594/22.387; U; ru) Presto/2.5.25 Version/10.54
+
+  //TODO: Microsoft Surface
+  //TODO: Galaxy Tab
+
   //TODO: No user agent string available
   //TODO: Unknown agent string
   //TODO: No analysis has been run before getting the properties
