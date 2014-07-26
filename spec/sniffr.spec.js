@@ -206,9 +206,27 @@ describe("sniffr", function() {
       "Mozilla/5.0 (Tablet; rv:26.0) Gecko/26.0 Firefox/26.0");
   });
 
-  //Windows mobile
-  //Opera mini
-  //Opera/9.80 (Windows Mobile; Opera Mini/5.1.21594/22.387; U; ru) Presto/2.5.25 Version/10.54
+  describe("Windows Phone/Windows Mobile", function() {
+    shouldDetect(
+      {
+        os: os("windows.phone", "7.5"),
+        browser: browser("ie", "9.0")
+      },
+      "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)");
+    shouldDetect(
+      {
+        os: os("windows.phone", "8.0"),
+        browser: browser("ie", "10.0"),
+        device: device("nokia")
+      },
+      "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 810)");
+    shouldDetect(
+      {
+        os: os("windows.mobile", "Unknown"),
+        browser: browser("opera.mini", "10.54")
+      },
+      "Opera/9.80 (Windows Mobile; Opera Mini/5.1.21594/22.387; U; ru) Presto/2.5.25 Version/10.54");
+  });
 
   //TODO: Microsoft Surface
   //TODO: Galaxy Tab

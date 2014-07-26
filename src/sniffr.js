@@ -20,14 +20,17 @@
       [/openbsd ()([a-z\.\_\d]+)/, "openbsd"],
       [/android ([a-z\.\_\d]+);/, "android"],
       [/android/, "android"],
-      [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"]
+      [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"],
+      [/windows phone.*?([\.\_\d]+)/, "windows.phone"],
+      [/windows mobile/, "windows.mobile"]
     ],
     device: [
       [/ipad/, "ipad"],
       [/iphone/, "iphone"],
       [/htc/, "htc"],
       [/nexus/, "nexus"],
-      [/galaxy nexus/, "galaxy.nexus"]
+      [/galaxy nexus/, "galaxy.nexus"],
+      [/nokia/, "nokia"]
     ]
   };
 
