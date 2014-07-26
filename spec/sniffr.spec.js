@@ -191,10 +191,20 @@ describe("sniffr", function() {
       "Mozilla/5.0 (iPhone; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10");
   });
 
-  //Firefox OS
-  //Firefox
-  //Mozilla/5.0 (Mobile; rv:14.0) Gecko/14.0 Firefox/14.0
-  //Mozilla/5.0 (Tablet; rv:26.0) Gecko/26.0 Firefox/26.0
+  describe("Firefox OS", function() {
+    shouldDetect(
+      {
+        os: os("firefoxos", "Unknown"),
+        browser: browser("firefox", "14.0")
+      },
+      "Mozilla/5.0 (Mobile; rv:14.0) Gecko/14.0 Firefox/14.0");
+    shouldDetect(
+      {
+        os: os("firefoxos", "Unknown"),
+        browser: browser("firefox", "26.0")
+      },
+      "Mozilla/5.0 (Tablet; rv:26.0) Gecko/26.0 Firefox/26.0");
+  });
 
   //Windows mobile
   //Opera mini

@@ -19,7 +19,8 @@
       [/os ([\.\_\d]+) like mac os/, "ios"],
       [/openbsd ()([a-z\.\_\d]+)/, "openbsd"],
       [/android ([a-z\.\_\d]+);/, "android"],
-      [/android/, "android"]
+      [/android/, "android"],
+      [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"]
     ],
     device: [
       [/ipad/, "ipad"],
