@@ -165,14 +165,36 @@ describe("sniffr", function() {
         device: device("nexus")
       },
       "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36");
-
   });
 
-  //iOS
-  //Chrome iOS
-  //Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/7534.48.3
-  //Safari iOS
-  //Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543 Safari/419.3
+  describe("iOS", function() {
+    shouldDetect(
+      {
+        os: os("ios", "5.1.1"),
+        browser: browser("chrome", "19.0.1084.60"),
+        device: device("iphone")
+      },
+      "Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/7534.48.3");
+    shouldDetect(
+      {
+        os: os("ios", "6.0"),
+        browser: browser("safari", "6.0"),
+        device: device("ipad")
+      },
+      "Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25");
+    shouldDetect(
+      {
+        os: os("ios", "3.2"),
+        browser: browser("safari", "4.0.4"),
+        device: device("iphone")
+      },
+      "Mozilla/5.0 (iPhone; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10");
+  });
+
+  //Firefox OS
+  //Firefox
+  //Mozilla/5.0 (Mobile; rv:14.0) Gecko/14.0 Firefox/14.0
+  //Mozilla/5.0 (Tablet; rv:26.0) Gecko/26.0 Firefox/26.0
 
   //Windows mobile
   //Opera mini

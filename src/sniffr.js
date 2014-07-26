@@ -9,7 +9,8 @@
       [/version\/([\.\_\d]+).*?safari/, "safari"],
       [/mobile safari ([\.\_\d]+)/, "safari"],
       [/android.*?version\/([\.\_\d]+).*?safari/, "com.android.browser"],
-      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"]
+      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"],
+      [/crios\/([\.\_\d]+).*?safari/, "chrome"]
     ],
     os: [
       [/windows nt ([\.\_\d]+)/, "windows"],
