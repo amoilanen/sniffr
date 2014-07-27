@@ -3,7 +3,7 @@ describe("sniffr", function() {
   var sniffer;
 
   beforeEach(function() {
-    sniffer = new Sniffr();
+    sniffer = new Sniffr.constructor();
   });
 
   function property(name, versionString) {
@@ -52,15 +52,13 @@ describe("sniffr", function() {
     describe(specName, function() {
 
       beforeEach(function() {
-        sniffer.sniff(agentString);
+        sniffer._sniff(agentString);
       });
 
       ["os", "browser", "device"].forEach(function(propertyName) {
         if (options[propertyName]) {
-          var getterName = "get" + propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
-
           it("it should recognize " + propertyName, function() {
-            expect(sniffer[getterName]()).toEqual(options[propertyName]);
+            expect(sniffer[propertyName]).toEqual(options[propertyName]);
           });
         }
       });
@@ -244,13 +242,8 @@ describe("sniffr", function() {
       "Opera/9.80 (Windows Mobile; Opera Mini/5.1.21594/22.387; U; ru) Presto/2.5.25 Version/10.54");
   });
 
-  //TODO: Microsoft Surface
-  //TODO: Galaxy Tab
-
   //TODO: No user agent string available
   //TODO: Unknown agent string
   //TODO: No analysis has been run before getting the properties
-  //TODO: Recognition of whether the device is mobile or not
-  //TODO: Recognize iOS/Android/Galaxy Tab
   //TODO: Recognize device orientation: portrait and landscape
 });

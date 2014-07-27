@@ -48,6 +48,7 @@
         versionString: "Unknown"
       };
     });
+    
   }
 
   function determineProperty(self, propertyName, userAgent) {
@@ -77,7 +78,7 @@
     });
   }
 
-  Sniffr.prototype.sniff = function(userAgentString) {
+  Sniffr.prototype._sniff = function(userAgentString) {
     var self = this;
     var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
 
@@ -86,13 +87,6 @@
     });
   };
 
-  propertyNames.forEach(function(propertyName) {
-    var getterName = "get" + propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
-
-    Sniffr.prototype[getterName] = function() {
-      return this[propertyName];
-    };
-  });
-
-  host.Sniffr = Sniffr;
+  host.Sniffr = new Sniffr();
+  host.Sniffr._sniff(navigator.userAgent);
 })(this);
