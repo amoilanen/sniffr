@@ -30,7 +30,9 @@
       [/htc/, "htc"],
       [/nexus/, "nexus"],
       [/galaxy nexus/, "galaxy.nexus"],
-      [/nokia/, "nokia"]
+      [/nokia/, "nokia"],
+      [/ gt\-/, "galaxy"],
+      [/ sm\-/, "galaxy"]
     ]
   };
 

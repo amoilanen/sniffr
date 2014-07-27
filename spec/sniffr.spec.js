@@ -76,6 +76,8 @@ describe("sniffr", function() {
       "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0) chromeframe/10.0.648.205");
     shouldDetect({os: os("windows", "5.1"), browser: browser("ie", "8.0")},
       "Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");
+    shouldDetect({os: os("windows", "6.2"), browser: browser("ie", "10.0")},
+      "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0)");
   });
 
   describe("Firefox", function() {
@@ -165,6 +167,20 @@ describe("sniffr", function() {
         device: device("nexus")
       },
       "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36");
+    shouldDetect(
+      {
+        os: os("android", "4.4.2"),
+        browser: browser("com.android.browser", "4.0"),
+        device: device("galaxy")
+      },
+      "Mozilla/5.0 (Linux; Android 4.4.2; SM-T311 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Safari/537.36");
+    shouldDetect(
+      {
+        os: os("android", "4.2.2"),
+        browser: browser("com.android.browser", "4.0"),
+        device: device("galaxy")
+      },
+      "Mozilla/5.0 (Linux; U; Android 4.2.2; en-us; GT-P5210 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30");
   });
 
   describe("iOS", function() {
