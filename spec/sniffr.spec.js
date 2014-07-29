@@ -242,8 +242,20 @@ describe("sniffr", function() {
       "Opera/9.80 (Windows Mobile; Opera Mini/5.1.21594/22.387; U; ru) Presto/2.5.25 Version/10.54");
   });
 
-  //TODO: No user agent string available
-  //TODO: Unknown agent string
-  //TODO: No analysis has been run before getting the properties
-  //TODO: Recognize device orientation: portrait and landscape
+  describe("user agent string none or unknown", function() {
+
+    var defaultEnvironment = {
+      os: os("Unknown", "Unknown"),
+      browser: browser("Unknown", "Unknown"),
+      device: device("Unknown")
+    };
+
+    it("should recognize default values for unknown user agent", function() {
+      shouldDetect(defaultEnvironment, "Unknown user agent string");
+    });
+
+    it("should recognize default values for undefined user agent", function() {
+      shouldDetect(defaultEnvironment, undefined);
+    });
+  });
 });

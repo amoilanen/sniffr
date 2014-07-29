@@ -48,7 +48,6 @@
         versionString: "Unknown"
       };
     });
-    
   }
 
   function determineProperty(self, propertyName, userAgent) {
