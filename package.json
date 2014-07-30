@@ -31,6 +31,6 @@
   },
   "homepage": "https://github.com/antivanov/sniffr",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt lint test"
   }
 }
