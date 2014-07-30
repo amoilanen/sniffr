@@ -66,8 +66,9 @@ after the page has loaded the object ```Sniffr``` is available and can be used i
 Example:
 
 ```javascript
-//If Windows and Firefox
-if (Sniffr.os.name === "windows" && Sniffr.browser.name === "firefox") {
+//If Windows and Firefox 28 or later
+if (Sniffr.os.name === "windows" 
+  && Sniffr.browser.name === "firefox" && Sniffr.browser.version[0] >= 28) {
   //Apply some workaround
 }
 ```
@@ -92,3 +93,7 @@ Stats.send(Sniffr.os, Sniffr.browser);
 Some libraries like _jQuery_ provide only browser information and not the OS information. Others like _Detectizr_ are plugins for yet another libraries that you may not use. Yet others require some server-side code.
 
 _Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible.
+
+## Credits
+
+The original sniffing dog image location is http://publicdomainvectors.org/en/free-clipart/Dog-sniffing-vector-image/11807.html
