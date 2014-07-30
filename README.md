@@ -1,7 +1,6 @@
-Sniffr [![Build Status](https://travis-ci.org/antivanov/sniffr.svg?branch=master)](https://travis-ci.org/antivanov/sniffr)
+<img src="http://publicdomainvectors.org/photos/bastiyxc_schn_ffelhund.png" alt="sniff-sniff..." width="150px" height="100px"/>
 
-
-<img src="http://publicdomainvectors.org/photos/bastiyxc_schn_ffelhund.png" alt="sniff-sniff..." style="width: 200px;"/>
+# Sniffr [![Build Status](https://travis-ci.org/antivanov/sniffr.svg?branch=master)](https://travis-ci.org/antivanov/sniffr)
 
 ========
 
