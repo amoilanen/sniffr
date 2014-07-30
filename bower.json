@@ -12,7 +12,9 @@
     "sniffing",
     "detection",
     "browser-sniffing",
-    "os-detection"
+    "os-detection",
+    "browser",
+    "os"
   ],
   "license": "MIT",
   "ignore": [
