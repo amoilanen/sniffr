@@ -88,6 +88,6 @@ Stats.send(Sniffr.os, Sniffr.browser);
 
 ## Other libraries
 
-Some libraries provide only browser information and not the OS information like _jQuery_ are plugins for other libraries that you may not use like _Detectizr_ or require some server-side code.
+Some libraries like _jQuery_ provide only browser information and not the OS information. Others like _Detectizr_ are plugins for yet another libraries that you may not use. Yet others require some server-side code.
 
-_Sniffr_ provides simple and symmetric API, does not require the server part, is tiny, fast and easily extensible.
+_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible.
