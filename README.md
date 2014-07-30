@@ -1,4 +1,4 @@
-Sniffr [![Build Status](https://travis-ci.org/antivanov/jsAspect.svg?branch=master)](https://travis-ci.org/antivanov/jsAspect)
+Sniffr [![Build Status](https://travis-ci.org/antivanov/sniffr.svg?branch=master)](https://travis-ci.org/antivanov/sniffr)
 ========
 
 Browser, OS and device detection in browser based on the available user agent string.
