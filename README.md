@@ -1,22 +1,17 @@
-Sniffr
-===========
-
-jsAspect [![Build Status](https://travis-ci.org/antivanov/jsAspect.svg?branch=master)](https://travis-ci.org/antivanov/jsAspect)
+Sniffr [![Build Status](https://travis-ci.org/antivanov/jsAspect.svg?branch=master)](https://travis-ci.org/antivanov/jsAspect)
 ========
 
-Pure JavaScript browser and OS detection in browser based on the available user agent string.
+Browser, OS and device detection in browser based on the available user agent string.
 
->it's very rarely a good idea to use user agent sniffing. You can almost always find a better, more broadly compatible way to solve your problem! [MDN](https://developer.mozilla.org/en-US/docs/Browser_detection_using_the_user_agent))
+>it's very rarely a good idea to use user agent sniffing. You can almost always find a better, more broadly compatible way to solve your problem! [MDN: Browser detection using the user agent](https://developer.mozilla.org/en-US/docs/Browser_detection_using_the_user_agent)
 
-## When you may need it
+## Why use it
 
-In case some browser-specific issue cannot be fixed by applying the same code uniformly across the browsers.
-For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
+In case some browser-specific issue cannot be fixed by applying the same code uniformly across the browsers we may need to do (sad gasp) some browser detection. For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
 
-Another case is when you need to know who are users of your site and for what browsers you would like to support in the first place. Then you may want to send the data obtained via Sniffer to the server for further
-processing.
+Another legitimate case is when you need to know which browsers, os and devices are most frequently used by users of your site. Then you may want to send the data obtained via Sniffer to the server for further processing.
 
-## Recognized browsers, operating systems and devices
+## What is recognized
 
 ### Browsers
 
@@ -70,8 +65,8 @@ after the page has loaded the object ```Sniffr``` is available and can be used i
 Example:
 
 ```javascript
-//If Windows 8.1 and Firefox
-if (Sniffr.os.name === "windows" && Sniffr.os.versionString == "6.3" && Sniffr.browser.name === "firefox") {
+//If Windows and Firefox
+if (Sniffr.os.name === "windows" && Sniffr.browser.name === "firefox") {
   //Apply some workaround
 }
 ```
@@ -86,10 +81,12 @@ Stats.send(Sniffr.os, Sniffr.browser);
 ## API
 
 `Sniffr.os`: operating system
+
 `Sniffr.browser`: browser
+
 `Sniffr.device`: device
 
-## Comparing to other libraries
+## Other libraries
 
 Some libraries provide only browser information and not the OS information like _jQuery_ are plugins for other libraries that you may not use like _Detectizr_ or require some server-side code.
 
