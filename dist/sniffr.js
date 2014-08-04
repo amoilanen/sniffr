@@ -44,7 +44,11 @@ if (!Object.keys) {
       [/opera/, "opera"],
       [/opera\/([\.\_\d]+)/, "opera"],
       [/opera ([\.\_\d]+)/, "opera"],
-      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"]
+      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"],
+      [/blackberry/, "blackberry"],
+      [/blackberry.*?version\/([\.\_\d]+)/, "blackberry"],
+      [/bb\d+.*?version\/([\.\_\d]+)/, "blackberry"],
+      [/rim.*?version\/([\.\_\d]+)/, "blackberry"]
     ],
     os: [
       [/linux ()([a-z\.\_\d]+)/, "linux"],
@@ -57,7 +61,10 @@ if (!Object.keys) {
       [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"],
       [/windows\s*(?:nt)?\s*([\.\_\d]+)/, "windows"],
       [/windows phone.*?([\.\_\d]+)/, "windows.phone"],
-      [/windows mobile/, "windows.mobile"]
+      [/windows mobile/, "windows.mobile"],
+      [/blackberry/, "blackberryos"],
+      [/bb\d+/, "blackberryos"],
+      [/rim.*?os\s*([\.\_\d]+)/, "blackberryos"]
     ],
     device: [
       [/ipad/, "ipad"],
@@ -67,7 +74,8 @@ if (!Object.keys) {
       [/galaxy nexus/, "galaxy.nexus"],
       [/nokia/, "nokia"],
       [/ gt\-/, "galaxy"],
-      [/ sm\-/, "galaxy"]
+      [/ sm\-/, "galaxy"],
+      [/(?:bb\d+)|(?:blackberry)|(?: rim )/, "blackberry"]
     ]
   };
 

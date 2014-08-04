@@ -1,3 +1,6 @@
+/*
+ * Some user agent strings are taken from http://www.useragentstring.com
+ */
 describe("sniffr", function() {
 
   var sniffer;
@@ -138,6 +141,44 @@ describe("sniffr", function() {
       "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera");
     shouldDetect({os: os("windows", "98"), browser: browser("opera", "4.02")},
       "Opera/4.02 (Windows 98; U) [en]");
+  });
+
+  describe("Blackberry", function() {
+    shouldDetect(
+      {
+        os: os("blackberryos", "Unknown"),
+        browser: browser("blackberry", "7.0.0.254"),
+        device: device("blackberry")
+      },
+      "Mozilla/5.0 (BlackBerry; U; BlackBerry 9860; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.0.0.254 Mobile Safari/534.11+");
+    shouldDetect(
+      {
+        os: os("blackberryos", "Unknown"),
+        browser: browser("blackberry", "10.0.9.1675"),
+        device: device("blackberry")
+      },
+      "Mozilla/5.0 (BB10; Touch) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.0.9.1675 Mobile Safari/537.10+");
+    shouldDetect(
+      {
+        os: os("blackberryos", "2.0.0"),
+        browser: browser("blackberry", "7.2.0.0"),
+        device: device("blackberry")
+      },
+      "Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.0.0; en-US) AppleWebKit/535.8+ (KHTML, like Gecko) Version/7.2.0.0 Safari/535.8+");
+    shouldDetect(
+      {
+        os: os("blackberryos", "Unknown"),
+        browser: browser("blackberry", "6.0.0.141"),
+        device: device("blackberry")
+      },
+      "Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/6.0.0.141 Mobile Safari/534.11+");
+    shouldDetect(
+      {
+        os: os("blackberryos", "Unknown"),
+        browser: browser("blackberry", "Unknown"),
+        device: device("blackberry")
+      },
+      "BlackBerry9000/5.0.0.93 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/179");
   });
 
   describe("Android", function() {

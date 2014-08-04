@@ -21,7 +21,8 @@ Another legitimate case is when you need to know which browsers, os and devices 
 * Chrome
 * Opera
 * Safari
-* Android stock browser
+* Android Browser
+* BlackBerry Browser
 * Opera mini
 
 ### Operating Systems
@@ -30,6 +31,7 @@ Another legitimate case is when you need to know which browsers, os and devices 
 * Linux
 * Mac OS
 * iOS
+* Blackberry OS
 * OpenBSD
 * Android
 * Firefox OS
@@ -40,10 +42,11 @@ Another legitimate case is when you need to know which browsers, os and devices 
 
 * iPad
 * iPhone
+* Galaxy
 * HTC
 * Nexus
 * Nokia
-* Galaxy
+* Blackberry
 
 ## Installation
 To install the library just use bower:
@@ -68,7 +71,7 @@ Example:
 
 ```javascript
 //If Windows and Firefox 28 or later
-if (Sniffr.os.name === "windows" 
+if (Sniffr.os.name === "windows"
   && Sniffr.browser.name === "firefox" && Sniffr.browser.version[0] >= 28) {
   //Apply some workaround
 }
