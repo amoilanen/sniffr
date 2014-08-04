@@ -9,18 +9,22 @@
       [/version\/([\.\_\d]+).*?safari/, "safari"],
       [/mobile safari ([\.\_\d]+)/, "safari"],
       [/android.*?version\/([\.\_\d]+).*?safari/, "com.android.browser"],
-      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"],
-      [/crios\/([\.\_\d]+).*?safari/, "chrome"]
+      [/crios\/([\.\_\d]+).*?safari/, "chrome"],
+      [/opera/, "opera"],
+      [/opera\/([\.\_\d]+)/, "opera"],
+      [/opera ([\.\_\d]+)/, "opera"],
+      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"]
     ],
     os: [
-      [/windows nt ([\.\_\d]+)/, "windows"],
       [/linux ()([a-z\.\_\d]+)/, "linux"],
-      [/mac os.*?([\.\_\d]+)/, "macos"],
+      [/mac os x/, "macos"],
+      [/mac os x.*?([\.\_\d]+)/, "macos"],
       [/os ([\.\_\d]+) like mac os/, "ios"],
       [/openbsd ()([a-z\.\_\d]+)/, "openbsd"],
-      [/android ([a-z\.\_\d]+);/, "android"],
       [/android/, "android"],
+      [/android ([a-z\.\_\d]+);/, "android"],
       [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"],
+      [/windows\s*(?:nt)?\s*([\.\_\d]+)/, "windows"],
       [/windows phone.*?([\.\_\d]+)/, "windows.phone"],
       [/windows mobile/, "windows.mobile"]
     ],
@@ -36,6 +40,8 @@
     ]
   };
 
+  var UNKNOWN = "Unknown";
+
   var propertyNames = Object.keys(properties);
 
   function Sniffr() {
@@ -43,9 +49,9 @@
 
     propertyNames.forEach(function(propertyName) {
       self[propertyName] = {
-        name: "Unknown",
+        name: UNKNOWN,
         version: [],
-        versionString: "Unknown"
+        versionString: UNKNOWN
       };
     });
   }
@@ -66,6 +72,9 @@
         } else if (match[1]) {
           self[propertyName].versionString = match[1].replace(/_/g, ".");
           self[propertyName].version = parseVersion(match[1]);
+        } else {
+          self[propertyName].versionString = UNKNOWN;
+          self[propertyName].version = [];
         }
       }
     });

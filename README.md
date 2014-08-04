@@ -16,9 +16,10 @@ Another legitimate case is when you need to know which browsers, os and devices 
 
 ### Browsers
 
-* Internet Explorer
 * Firefox
+* Internet Explorer
 * Chrome
+* Opera
 * Safari
 * Android stock browser
 * Opera mini

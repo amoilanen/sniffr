@@ -119,6 +119,27 @@ describe("sniffr", function() {
       "Mozilla/5.0 (iPhone; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10");
   });
 
+  describe("Opera", function() {
+    shouldDetect({os: os("windows", "6.0"), browser: browser("opera", "9.80")},
+      "Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14");
+    shouldDetect({os: os("linux", "i686"), browser: browser("opera", "9.80")},
+      "Opera/9.80 (X11; Linux i686; U; hu) Presto/2.9.168 Version/11.50");
+    shouldDetect({os: os("windows", "5.1"), browser: browser("opera", "11.11")},
+      "Mozilla/5.0 (Windows NT 5.1; U; en; rv:1.8.1) Gecko/20061208 Firefox/5.0 Opera 11.11");
+    shouldDetect({os: os("windows", "6.1"), browser: browser("opera", "9.80")},
+      "Opera/9.80 (Windows NT 6.1; Opera Tablet/15165; U; en) Presto/2.8.149 Version/11.1");
+    shouldDetect({os: os("macos", "Unknown"), browser: browser("opera", "9.52")},
+      "Opera/9.52 (Macintosh; PPC Mac OS X; U; ja)");
+    shouldDetect({os: os("macos", "10.6.8"), browser: browser("opera", "9.80")},
+      "Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52");
+    shouldDetect({os: os("windows", "98"), browser: browser("opera", "5.12")},
+      "Mozilla/4.0 (compatible; MSIE 5.0; Windows 98) Opera 5.12 [de]");
+    shouldDetect({os: os("windows", "5.1"), browser: browser("opera", "Unknown")},
+      "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera");
+    shouldDetect({os: os("windows", "98"), browser: browser("opera", "4.02")},
+      "Opera/4.02 (Windows 98; U) [en]");
+  });
+
   describe("Android", function() {
     shouldDetect(
       {
@@ -129,13 +150,13 @@ describe("sniffr", function() {
       "Mozilla/5.0 (Linux; U; Android 2.2; fr-lu; HTC Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
     shouldDetect(
       {
-        os: os("android", "armv7l"),
+        os: os("android", "Unknown"),
         browser: browser("firefox", "9.0")
       },
       "Mozilla/5.0 (Android; Linux armv7l; rv:9.0) Gecko/20111216 Firefox/9.0 Fennec/9.0");
     shouldDetect(
       {
-        os: os("android", "armv7l"),
+        os: os("android", "Unknown"),
         browser: browser("firefox", "5.0")
       },
       "Mozilla/5.0 (Android; Linux armv7l; rv:5.0) Gecko/20110614 Firefox/5.0 Fennec/5.0");
