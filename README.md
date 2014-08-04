@@ -94,7 +94,7 @@ Stats.send(Sniffr.os, Sniffr.browser);
 
 `Sniffr.sniff` : function that expects a user agent string as an argument, it is called automatically in a browser
 
-## Server-side user
+## Using it on the server side
 
 Sniffr can also be used as a Node module in case you need to do some server-side user agent recognition as well.
 
