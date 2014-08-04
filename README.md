@@ -105,7 +105,17 @@ First install it
 Then load the module, provide it the agent string and query the results just like in a browser environment:
 
 ```javascript
+var Sniffr = require("sniffr");
+var s = new Sniffr();
 
+s.sniff("Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25");
+
+console.log("Operating System:");
+console.log(s.os);
+console.log("Browser:");
+console.log(s.browser);
+console.log("Device:");
+console.log(s.device);
 ```
 
 ## Other libraries
