@@ -55,7 +55,7 @@ describe("sniffr", function() {
     describe(specName, function() {
 
       beforeEach(function() {
-        sniffer._sniff(agentString);
+        sniffer.sniff(agentString);
       });
 
       ["os", "browser", "device"].forEach(function(propertyName) {

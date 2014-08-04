@@ -94,7 +94,7 @@
     });
   }
 
-  Sniffr.prototype._sniff = function(userAgentString) {
+  Sniffr.prototype.sniff = function(userAgentString) {
     var self = this;
     var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
 
@@ -103,6 +103,11 @@
     });
   };
 
-  host.Sniffr = new Sniffr();
-  host.Sniffr._sniff(navigator.userAgent);
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Sniffr;
+  } else {
+    host.Sniffr = new Sniffr();
+    host.Sniffr.sniff(navigator.userAgent);
+  }
 })(this);

@@ -2,7 +2,7 @@
 
 # Sniffr [![Build Status](https://travis-ci.org/antivanov/sniffr.svg?branch=master)](https://travis-ci.org/antivanov/sniffr)
 
-Browser, OS and device detection in browser based on the available user agent string.
+Browser, OS and device detection based on the available user agent string.
 
 >it's very rarely a good idea to use user agent sniffing. You can almost always find a better, more broadly compatible way to solve your problem! [MDN: Browser detection using the user agent](https://developer.mozilla.org/en-US/docs/Browser_detection_using_the_user_agent)
 
@@ -92,11 +92,27 @@ Stats.send(Sniffr.os, Sniffr.browser);
 
 `Sniffr.device`: device
 
+`Sniffr.sniff` : function that expects a user agent string as an argument, it is called automatically in a browser
+
+## Server-side user
+
+Sniffr can also be used as a Node module in case you need to do some server-side user agent recognition as well.
+
+First install it
+
+`npm install sniffr`
+
+Then load the module, provide it the agent string and query the results just like in a browser environment:
+
+```javascript
+
+```
+
 ## Other libraries
 
-Some libraries like _jQuery_ provide only browser information and not the OS information. Others like _Detectizr_ are plugins for yet another libraries that you may not use. Yet others require some server-side code.
+Some libraries like _jQuery_ provide only browser information and not the OS information. Others like _Detectizr_ are plugins for yet another libraries that you may not use. Yet others require some server-side code. Many libraries are usable only on the server side or only in a browser.
 
-_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible.
+_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible. In addition, it can be used both in a browser and on the server side.
 
 ## Credits
 
