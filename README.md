@@ -8,9 +8,9 @@ Browser, OS and device detection based on the available user agent string.
 
 ## Why use it
 
-In case some browser-specific issue cannot be fixed by applying the same code uniformly across the browsers we may need to do (sad gasp) some browser detection. For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
+In case some browser-specific issue cannot be fixed uniformly across the browsers we may need to perform (sad gasp) some browser detection. For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
 
-Another legitimate case is when you need to know which browsers, os and devices are most frequently used by users of your site. Then you may want to send the data obtained via Sniffer to the server for further processing.
+Another legitimate case is when we want to know what browsers, os and devices are most frequently used when our site is accessed. Then we can just analyze the user agent string sent in HTTP request headers on a server side. As a minor variation, alternatively, we can perform the user agent string analysis on the client side and send to the server only the results.
 
 ## What is recognized
 
@@ -49,7 +49,7 @@ Another legitimate case is when you need to know which browsers, os and devices 
 * Blackberry
 
 ## Installation
-To install the library just use bower:
+To install the library use Bower:
 
 ``` javascript
 bower install sniffr
@@ -65,7 +65,7 @@ The library is meant to be used only in a browser, no server-side code is run. I
 <script src="bower_components/dist/sniffr.min.js" />
 ```
 
-after the page has loaded the object ```Sniffr``` is available and can be used in the client code.
+after the script has loaded the object ```Sniffr``` is available and can be used in the client code.
 
 Example:
 
@@ -81,7 +81,7 @@ Example:
 
 ```javascript
 //Sending user browser and os information to the server for further analysis
-Stats.send(Sniffr.os, Sniffr.browser);
+Stats.send(Sniffr.os, Sniffr.browser, Sniffr.device);
 ```
 
 ## API
@@ -94,9 +94,9 @@ Stats.send(Sniffr.os, Sniffr.browser);
 
 `Sniffr.sniff` : function that expects a user agent string as an argument, it is called automatically in a browser
 
-## Using it on the server side
+## Server side
 
-Sniffr can also be used as a Node module in case you need to do some server-side user agent recognition as well.
+Sniffr can also be used in a Node.js environment in case you need to do some server-side user agent analysis as well.
 
 First install it
 
@@ -120,9 +120,9 @@ console.log(s.device);
 
 ## Other libraries
 
-Some libraries like _jQuery_ provide only browser information and not the OS information. Others like _Detectizr_ are plugins for yet another libraries that you may not use. Yet others require some server-side code. Many libraries are usable only on the server side or only in a browser.
+Some libraries like _jQuery_ provide only browser information and not the OS information. Some like _Detectizr_ are plugins for other libraries that you may not use. And some require server-side code. A few libraries are usable only on the server side or only in a browser.
 
-_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible. In addition, it can be used both in a browser and on the server side.
+_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible. In addition, it can be used either in a browser environment and on the server side.
 
 ## Credits
 
