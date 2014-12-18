@@ -17,7 +17,8 @@
       [/blackberry/, "blackberry"],
       [/blackberry.*?version\/([\.\_\d]+)/, "blackberry"],
       [/bb\d+.*?version\/([\.\_\d]+)/, "blackberry"],
-      [/rim.*?version\/([\.\_\d]+)/, "blackberry"]
+      [/rim.*?version\/([\.\_\d]+)/, "blackberry"],
+      [/iceweasel\/([\.\_\d]+)/, "iceweasel"]
     ],
     os: [
       [/linux ()([a-z\.\_\d]+)/, "linux"],

@@ -96,6 +96,10 @@ describe("sniffr", function() {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0b8) Gecko/20100101 Firefox/4.0b8");
     shouldDetect({os: os("linux", "x86_64"), browser: browser("firefox", "3.0.7")},
       "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.7) Gecko/2009031120 Mandriva Firefox/3.0.7");
+    shouldDetect({os: os("linux", "x86_64"), browser: browser("firefox", "34.0")},
+      "Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0");
+    shouldDetect({os: os("linux", "x86_64"), browser: browser("iceweasel", "24.4.0")},
+      "Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20140319 Firefox/24.0 Iceweasel/24.4.0");
   });
 
   describe("Chrome", function() {
