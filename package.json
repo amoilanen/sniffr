@@ -4,7 +4,6 @@
   "description": "Browser, os and device detection",
   "main": "src/sniffr.js",
   "files": [
-    "examples/node_example.js",
     "src/sniffr.js",
     "LICENSE",
     "README.md"
