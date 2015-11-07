@@ -68,6 +68,11 @@ describe("sniffr", function() {
     });
   };
 
+  describe("Edge", function() {
+    shouldDetect({os: os("windows", "10.0"), browser: browser("edge", "12.10240")},
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240");
+  });
+
   describe("Internet Explorer", function() {
     shouldDetect({os: os("windows", "6.3"), browser: browser("ie", "11.0")},
       "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko");
@@ -100,6 +105,8 @@ describe("sniffr", function() {
       "Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0");
     shouldDetect({os: os("linux", "x86_64"), browser: browser("iceweasel", "24.4.0")},
       "Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20140319 Firefox/24.0 Iceweasel/24.4.0");
+    shouldDetect({os: os("windows", "10.0"), browser: browser("firefox", "42.0")},
+      "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
   });
 
   describe("Chrome", function() {
@@ -111,6 +118,8 @@ describe("sniffr", function() {
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36");
     shouldDetect({os: os("windows", "5.1"), browser: browser("chrome", "3.0.191.0")},
       "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.0 (KHTML, like Gecko) Chrome/3.0.191.0 Safari/531.0");
+    shouldDetect({os: os("windows", "10.0"), browser: browser("chrome", "46.0.2490.80")},
+      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
   });
 
   describe("Safari", function() {
