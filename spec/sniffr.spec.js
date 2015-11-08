@@ -325,12 +325,8 @@ describe("sniffr", function() {
       device: device("Unknown")
     };
 
-    it("should recognize default values for unknown user agent", function() {
+    describe("should recognize default values for unknown user agent", function() {
       shouldDetect(defaultEnvironment, "Unknown user agent string");
-    });
-
-    it("should recognize default values for undefined user agent", function() {
-      shouldDetect(defaultEnvironment, undefined);
     });
   });
 });
