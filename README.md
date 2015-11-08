@@ -18,6 +18,7 @@ Another legitimate case is when we want to know what browsers, os and devices ar
 
 * Firefox
 * Internet Explorer
+* Edge
 * Chrome
 * Opera
 * Safari
