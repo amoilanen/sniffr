@@ -47,7 +47,9 @@ Another legitimate case is when we want to know what browsers, os and devices ar
 * HTC
 * Nexus
 * Nokia
+* Lumia
 * Blackberry
+* XBox
 
 ## Installation
 To install the library use Bower:

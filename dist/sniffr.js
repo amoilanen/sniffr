@@ -71,12 +71,14 @@ if (!Object.keys) {
     device: [
       [/ipad/, "ipad"],
       [/iphone/, "iphone"],
+      [/lumia/, "lumia"],
       [/htc/, "htc"],
       [/nexus/, "nexus"],
       [/galaxy nexus/, "galaxy.nexus"],
       [/nokia/, "nokia"],
       [/ gt\-/, "galaxy"],
       [/ sm\-/, "galaxy"],
+      [/xbox/, "xbox"],
       [/(?:bb\d+)|(?:blackberry)|(?: rim )/, "blackberry"]
     ]
   };

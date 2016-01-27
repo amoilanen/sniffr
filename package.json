@@ -1,6 +1,6 @@
 {
   "name": "sniffr",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Browser, os and device detection",
   "main": "src/sniffr.js",
   "files": [

@@ -11,7 +11,7 @@ describe("sniffr", function() {
 
   function property(name, versionString) {
     var version = versionString.split(".").map(function(versionPart) {
-      return parseInt(versionPart);
+      return parseInt(versionPart, 10);
     });
     var nonParsableVersion = version.some(function(versionPart) {
       return isNaN(versionPart);
@@ -84,6 +84,8 @@ describe("sniffr", function() {
       "Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");
     shouldDetect({os: os("windows", "6.2"), browser: browser("ie", "10.0")},
       "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0)");
+    shouldDetect({os: os("windows", "6.2"), browser: browser("ie", "10.0"), device: device("xbox")},
+      "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; Xbox; Xbox One)");
   });
 
   describe("Firefox", function() {
@@ -315,6 +317,14 @@ describe("sniffr", function() {
         browser: browser("opera.mini", "10.54")
       },
       "Opera/9.80 (Windows Mobile; Opera Mini/5.1.21594/22.387; U; ru) Presto/2.5.25 Version/10.54");
+    shouldDetect(
+      {
+        os: os("windows.phone", "8.1"),
+        browser: browser("ie", "11.0"),
+        device: device("lumia")
+      },
+      "Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; Microsoft; Lumia 640 LTE) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537"
+    );
   });
 
   describe("user agent string none or unknown", function() {
