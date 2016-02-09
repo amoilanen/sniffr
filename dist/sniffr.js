@@ -45,6 +45,7 @@ if (!Object.keys) {
       [/opera\/([\.\_\d]+)/, "opera"],
       [/opera ([\.\_\d]+)/, "opera"],
       [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"],
+      [/opios\/([a-z\.\_\d]+)/, "opera"],
       [/blackberry/, "blackberry"],
       [/blackberry.*?version\/([\.\_\d]+)/, "blackberry"],
       [/bb\d+.*?version\/([\.\_\d]+)/, "blackberry"],

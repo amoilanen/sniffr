@@ -156,6 +156,8 @@ describe("sniffr", function() {
       "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera");
     shouldDetect({os: os("windows", "98"), browser: browser("opera", "4.02")},
       "Opera/4.02 (Windows 98; U) [en]");
+    shouldDetect({os: os("ios", "9.2.1"), browser: browser("opera", "12.1.1.98980"), device: device("iphone")},
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 9_2_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) OPiOS/12.1.1.98980 Mobile/13D15 Safari/9537.53");
   });
 
   describe("Blackberry", function() {
