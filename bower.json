@@ -23,8 +23,5 @@
     "**/.*",
     "node_modules",
     "bower_components"
-  ],
-  "devDependencies": {
-    "jasmine": "~2.0.0"
-  }
+  ]
 }

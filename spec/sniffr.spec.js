@@ -1,3 +1,5 @@
+const { expect } = chai;
+
 /*
  * Some user agent strings are taken from http://www.useragentstring.com
  */
@@ -61,7 +63,7 @@ describe("sniffr", function() {
       ["os", "browser", "device"].forEach(function(propertyName) {
         if (options[propertyName]) {
           it("it should recognize " + propertyName, function() {
-            expect(sniffer[propertyName]).toEqual(options[propertyName]);
+            expect(sniffer[propertyName]).to.eql(options[propertyName]);
           });
         }
       });
