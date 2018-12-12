@@ -8,7 +8,7 @@ module.exports = function (karma) {
       'spec/*.js'
     ],
     reporters: ['spec'],
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
     client: {
       mocha: {
