@@ -108,6 +108,7 @@
     propertyNames.forEach(function(propertyName) {
       determineProperty(self, propertyName, userAgent);
     });
+    return this;
   };
 
 
