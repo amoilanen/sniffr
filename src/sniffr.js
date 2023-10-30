@@ -5,6 +5,7 @@
       [/msie ([\.\_\d]+)/, 'ie'],
       [/trident\/.*?rv:([\.\_\d]+)/, 'ie'],
       [/firefox\/([\.\_\d]+)/, 'firefox'],
+      [/fxios\/([\.\_\d]+)/, 'firefox'],
       [/chrome\/([\.\_\d]+)/, 'chrome'],
       [/version\/([\.\_\d]+).*?safari/, 'safari'],
       [/mobile safari ([\.\_\d]+)/, 'safari'],
