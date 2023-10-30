@@ -52,13 +52,19 @@ Another legitimate case is when we want to know what browsers, os and devices ar
 * XBox
 
 ## Installation
-To install the library use Bower:
+To install the library use either Bower or NPM:
 
-``` javascript
+```bash
 bower install sniffr
 ```
 
 Ready to use library is available in the _dist_ folder.
+
+NPM:
+
+```bash
+npm install sniffr
+```
 
 ## How to use
 
