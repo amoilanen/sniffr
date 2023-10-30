@@ -5,7 +5,7 @@
   "main": "dist/sniffr.min.js",
   "homepage": "https://github.com/antivanov/sniffr",
   "authors": [
-    "Anton Ivanov <anton.al.ivanov@gmail.com>"
+    "Anton Moilanen <anton.a.moilanen@gmail.com>"
   ],
   "keywords": [
     "browser detection",

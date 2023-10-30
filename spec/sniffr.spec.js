@@ -1,6 +1,4 @@
-/* global chai Sniffr */
-
-const { expect } = chai;
+const Sniffr = require('sniffr')
 
 /*
  * Some user agent strings are taken from http://www.useragentstring.com
@@ -10,7 +8,7 @@ describe('sniffr', function() {
   var sniffer;
 
   beforeEach(function() {
-    sniffer = new Sniffr.constructor();
+    sniffer = new Sniffr();
   });
 
   function property(name, versionString) {
@@ -65,7 +63,7 @@ describe('sniffr', function() {
       ['os', 'browser', 'device'].forEach(function(propertyName) {
         if (options[propertyName]) {
           it('it should recognize ' + propertyName, function() {
-            expect(sniffer[propertyName]).to.eql(options[propertyName]);
+            expect(sniffer[propertyName]).toEqual(options[propertyName]);
           });
         }
       });
