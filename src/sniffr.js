@@ -15,15 +15,20 @@
       [/opera\/([\.\_\d]+)/, 'opera'],
       [/opera ([\.\_\d]+)/, 'opera'],
       [/opera mini.*?version\/([\.\_\d]+)/, 'opera.mini'],
+      [/opr\/([\.\_\d]+)/, 'opera'],
       [/opios\/([a-z\.\_\d]+)/, 'opera'],
       [/blackberry/, 'blackberry'],
       [/blackberry.*?version\/([\.\_\d]+)/, 'blackberry'],
       [/bb\d+.*?version\/([\.\_\d]+)/, 'blackberry'],
       [/rim.*?version\/([\.\_\d]+)/, 'blackberry'],
       [/iceweasel\/([\.\_\d]+)/, 'iceweasel'],
-      [/edge\/([\.\d]+)/, 'edge']
+      [/edge\/([\.\d]+)/, 'edge'],
+      [/edg\/([\.\d]+)/, 'edge'],
+      [/yabrowser\/([\.\d]+)/, 'yandex'],
+      [/seamonkey\/([\.\d]+)/, 'seamonkey'],
     ],
     os: [
+      [/cros\s*\S+\s*([\.\_\d]+)/, 'chromeos'],
       [/linux ()([a-z\.\_\d]+)/, 'linux'],
       [/mac os x/, 'macos'],
       [/mac os x.*?([\.\_\d]+)/, 'macos'],
@@ -97,7 +102,9 @@
   function parseVersion(versionString) {
     return versionString.split(/[\._]/).map(function(versionPart) {
       return parseInt(versionPart);
-    });
+    }).filter(versionPart =>
+      !isNaN(versionPart)
+    );
   }
 
   Sniffr.prototype.sniff = function(userAgentString) {
