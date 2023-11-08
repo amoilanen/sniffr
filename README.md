@@ -1,16 +1,12 @@
 <img src="http://publicdomainvectors.org/photos/bastiyxc_schn_ffelhund.png" alt="sniff-sniff..." width="150px" height="100px"/>
 
-# Sniffr [![Build Status](https://travis-ci.org/antivanov/sniffr.svg?branch=master)](https://travis-ci.org/antivanov/sniffr)
-
-Browser, OS and device detection based on the available user agent string.
+Browser, OS and device detection based on the available user agent string. Can be used both in a browser (also as a standalone script) or in a server environment.
 
 >it's very rarely a good idea to use user agent sniffing. You can almost always find a better, more broadly compatible way to solve your problem! [MDN: Browser detection using the user agent](https://developer.mozilla.org/en-US/docs/Browser_detection_using_the_user_agent)
 
 ## Why use it
 
-In case some browser-specific issue cannot be fixed uniformly across the browsers we may need to perform (sad gasp) some browser detection. For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
-
-Another legitimate case is when we want to know what browsers, os and devices are most frequently used when our site is accessed. Then we can just analyze the user agent string sent in HTTP request headers on a server side. As a minor variation, alternatively, we can perform the user agent string analysis on the client side and send to the server only the results.
+In case some browser-specific issue cannot be fixed uniformly across browsers we may need to perform some browser detection. For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
 
 ## What is recognized
 
@@ -21,16 +17,19 @@ Another legitimate case is when we want to know what browsers, os and devices ar
 * Edge
 * Chrome
 * Opera
+* Opera mini
 * Safari
 * Android Browser
 * BlackBerry Browser
-* Opera mini
+* Yandex Browser
+* SeaMonkey
 
 ### Operating Systems
 
 * Windows
 * Linux
 * Mac OS
+* ChromeOS
 * iOS
 * Blackberry OS
 * OpenBSD
@@ -52,31 +51,56 @@ Another legitimate case is when we want to know what browsers, os and devices ar
 * XBox
 
 ## Installation
-To install the library use either Bower or NPM:
 
-```bash
-bower install sniffr
-```
+### NPM
 
-Ready to use library is available in the _dist_ folder.
-
-NPM:
+To install the library use npm:
 
 ```bash
 npm install sniffr
 ```
 
-## How to use
+### As a standalone script in a browser
 
-The library is meant to be used only in a browser, no server-side code is run. Include the library:
+Hosted version (by jsDelivr) can be found here (replace the version number) https://cdn.jsdelivr.net/gh/amoilanen/sniffr@1.2.2/dist/sniffr.min.js
 
-```html
-<script src="bower_components/dist/sniffr.min.js" />
+https://github.com/amoilanen/sniffr/blob/master/dist/sniffr.min.js is a downloadable minified version of the library to be used as a standalone script
+in a browser.
+
+## How to use in a browser
+
+### NPM
+
+The library is can be directly used in a browser, no server-side code is run. Sniffr is written in Typescript and includes all the necessary typings.
+
+```javascript
+import { RecognizedBrowser } from "sniffr"
+
+//If Windows and Firefox 28 or later
+if (RecognizedBrowser.os.name === "windows"
+  && RecognizedBrowser.browser.name === "firefox" && RecognizedBrowser.browser.version[0] >= 28) {
+  //Apply some workaround
+}
 ```
 
-after the script has loaded the object ```Sniffr``` is available and can be used in the client code.
+For backward compatibility purposes the following more wordy legacy usage pattern is also supported:
 
-Example:
+```javascript
+import Sniffr from "sniffr"
+
+const sniffr = new Sniffr()
+sniffr.sniff()
+
+//If Windows and Firefox 28 or later
+if (sniffr.os.name === "windows"
+  && sniffr.browser.name === "firefox" && sniffr.browser.version[0] >= 28) {
+  //Apply some workaround
+}
+```
+
+### As a standalone script
+
+When the script is loaded `Sniffr` object will be initialized and put to the global namespace, it can be accessed directly:
 
 ```javascript
 //If Windows and Firefox 28 or later
@@ -86,24 +110,15 @@ if (Sniffr.os.name === "windows"
 }
 ```
 
-Example:
-
-```javascript
-//Sending user browser and os information to the server for further analysis
-Stats.send(Sniffr.os, Sniffr.browser, Sniffr.device);
-```
-
 ## API
 
-`Sniffr.os`: operating system
-
-`Sniffr.browser`: browser
-
-`Sniffr.device`: device
+`RecognizedBrowser.os`: operating system
+`RecognizedBrowser.browser`: browser
+`RecognizedBrowser.device`: device
 
 `Sniffr.sniff` : function that expects a user agent string as an argument, it is called automatically in a browser
 
-## Server side
+## How to use on the server side
 
 Sniffr can also be used in a Node.js environment in case you need to do some server-side user agent analysis as well.
 
@@ -129,9 +144,9 @@ console.log(s.device);
 
 ## Other libraries
 
-Some libraries like _jQuery_ provide only browser information and not the OS information. Some like _Detectizr_ are plugins for other libraries that you may not use. And some require server-side code. A few libraries are usable only on the server side or only in a browser.
+Some libraries like _jQuery_ provide only browser information and not the OS information. Some like _Detectizr_ are plugins for other libraries that you may not use. And some require server-side code. A few libraries are usable only on the server or only in a browser.
 
-_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible. In addition, it can be used either in a browser environment and on the server side.
+_Sniffr_ provides simple and symmetric API, does not depend on other libraries, does not require the server part, is tiny, fast and easily extensible. In addition, it can be used both in browser and server environments.
 
 ## Credits
 

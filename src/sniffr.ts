@@ -100,16 +100,22 @@ const deviceMatchers: [RegExp, Device][] = [
 ]
 
 const Unknown = 'Unknown'
-const UnknownProperty: RecognizedProperty<any> = {
+const UnknownProperty: RecognizedBrowserProperty<any> = {
   name: Unknown,
   version: [],
   versionString: Unknown
 }
 
-export interface RecognizedProperty<T> {
+export interface RecognizedBrowserProperty<T> {
   name: T | 'Unknown'
   version: number[]
   versionString: string | 'Unknown'
+}
+
+export interface RecognizedBrowser {
+  os: RecognizedBrowserProperty<OS>,
+  browser: RecognizedBrowserProperty<Browser>,
+  device: RecognizedBrowserProperty<Device>
 }
 
 function parseVersion(versionString: string) {
@@ -120,8 +126,8 @@ function parseVersion(versionString: string) {
   )
 }
 
-function determineProperty<T>(matchers: [RegExp, T][], userAgent: string): RecognizedProperty<T> {
-  const recognizedProperty: RecognizedProperty<T> = {...UnknownProperty}
+function determineProperty<T>(matchers: [RegExp, T][], userAgent: string): RecognizedBrowserProperty<T> {
+  const recognizedProperty: RecognizedBrowserProperty<T> = {...UnknownProperty}
   matchers.forEach(function(matcher) {
     const regex = matcher[0]
     const matchedValue = matcher[1]
@@ -145,17 +151,18 @@ function determineProperty<T>(matchers: [RegExp, T][], userAgent: string): Recog
   return recognizedProperty
 }
 
+const isBrowser = typeof window !== 'undefined'
+
 export default class Sniffr {
-  os: RecognizedProperty<OS>
-  device: RecognizedProperty<Device>
-  browser: RecognizedProperty<Browser>
+  os: RecognizedBrowserProperty<OS>
+  device: RecognizedBrowserProperty<Device>
+  browser: RecognizedBrowserProperty<Browser>
   constructor() {
     this.os = UnknownProperty
     this.device = UnknownProperty
     this.browser = UnknownProperty
   }
   sniff(userAgentString?: string): this {
-    const isBrowser = typeof window !== 'undefined'
     const fallbackUserAgent = isBrowser ? navigator.userAgent : ''
     const userAgent = (userAgentString || fallbackUserAgent).toLowerCase()
 
@@ -164,6 +171,19 @@ export default class Sniffr {
     this.browser = determineProperty(browserMatchers, userAgent)
     return this;
   }
+}
+
+export const RecognizedBrowser: RecognizedBrowser = {
+  os: UnknownProperty,
+  browser: UnknownProperty,
+  device: UnknownProperty
+}
+
+if (isBrowser) {
+  const result = new Sniffr().sniff(navigator.userAgent)
+  RecognizedBrowser.os = result.os
+  RecognizedBrowser.device = result.device
+  RecognizedBrowser.browser = result.browser
 }
 
 /*
