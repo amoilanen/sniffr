@@ -1,4 +1,4 @@
-const Sniffr = require('sniffr')
+import Sniffr, {OS, Browser, Device} from '../src/sniffr'
 
 /*
  * Some user agent strings are taken from http://www.useragentstring.com
@@ -6,19 +6,31 @@ const Sniffr = require('sniffr')
  */
 describe('sniffr', function() {
 
-  var sniffer;
+  interface ExpectedProperty {
+    name: string
+    version: number[]
+    versionString: string
+  }
+
+  interface TestCaseExpectations {
+    os?: ExpectedProperty,
+    browser?: ExpectedProperty,
+    device?: ExpectedProperty
+  }
+
+  let sniffer: Sniffr;
 
   beforeEach(function() {
     sniffer = new Sniffr();
   });
 
-  function property(name, versionString) {
-    var version = versionString.split('.').map(function(versionPart) {
+  function property(name: string, versionString: string): ExpectedProperty {
+    let version = versionString.split('.').map(function(versionPart) {
       return parseInt(versionPart, 10);
     }).filter(versionPart =>
       !isNaN(versionPart)
     );
-    var nonParsableVersion = version.some(function(versionPart) {
+    const nonParsableVersion = version.some(function(versionPart) {
       return isNaN(versionPart);
     });
     if (nonParsableVersion) {
@@ -32,29 +44,29 @@ describe('sniffr', function() {
     };
   }
 
-  function os(name, versionString) {
+  function os(name: string, versionString: string): ExpectedProperty {
+    return property(name, versionString)
+  }
+
+  function browser(name: string, versionString: string): ExpectedProperty {
     return property(name, versionString);
   }
 
-  function browser(name, versionString) {
-    return property(name, versionString);
-  }
-
-  function device(name) {
+  function device(name: string): ExpectedProperty {
     return property(name, 'Unknown');
   }
 
-  function shouldDetect(options, agentString) {
-    var specName = 'recognition';
+  function shouldDetect(expectations: TestCaseExpectations, agentString: string) {
+    let specName = 'recognition';
 
-    if (options.os) {
-      specName += ', os ' + options.os.name + ' ' + options.os.versionString;
+    if (expectations.os) {
+      specName += ', os ' + expectations.os.name + ' ' + expectations.os.versionString;
     }
-    if (options.browser) {
-      specName += ', browser ' + options.browser.name + ' ' + options.browser.versionString;
+    if (expectations.browser) {
+      specName += ', browser ' + expectations.browser.name + ' ' + expectations.browser.versionString;
     }
-    if (options.device) {
-      specName += ', device ' + options.device.name;
+    if (expectations.device) {
+      specName += ', device ' + expectations.device.name;
     }
 
     describe(specName, function() {
@@ -63,13 +75,29 @@ describe('sniffr', function() {
         sniffer.sniff(agentString);
       });
 
-      ['os', 'browser', 'device'].forEach(function(propertyName) {
-        if (options[propertyName]) {
-          it('it should recognize ' + propertyName, function() {
-            expect(sniffer[propertyName]).toEqual(options[propertyName]);
-          });
-        }
-      });
+      if (expectations.os) {
+        it('it should recognize os', () => {
+          expect(sniffer.os.name).toEqual(expectations.os?.name)
+          expect(sniffer.os.version).toEqual(expectations.os?.version)
+          expect(sniffer.os.versionString).toEqual(expectations.os?.versionString)
+        })
+      }
+
+      if (expectations.browser) {
+        it('it should recognize browser', () => {
+          expect(sniffer.browser.name).toEqual(expectations.browser?.name)
+          expect(sniffer.browser.version).toEqual(expectations.browser?.version)
+          expect(sniffer.browser.versionString).toEqual(expectations.browser?.versionString)
+        })
+      }
+
+      if (expectations.device) {
+        it('it should recognize device', () => {
+          expect(sniffer.device.name).toEqual(expectations.device?.name)
+          expect(sniffer.device.version).toEqual(expectations.device?.version)
+          expect(sniffer.device.versionString).toEqual(expectations.device?.versionString)
+        })
+      }
     });
   }
 
@@ -386,7 +414,7 @@ describe('sniffr', function() {
 
   describe('user agent string none or unknown', function() {
 
-    var defaultEnvironment = {
+    const defaultEnvironment = {
       os: os('Unknown', 'Unknown'),
       browser: browser('Unknown', 'Unknown'),
       device: device('Unknown')
