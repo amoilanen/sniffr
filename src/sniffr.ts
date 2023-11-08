@@ -193,7 +193,7 @@ declare global {
   interface Window {Sniffr: Sniffr}
 }
 
-if (typeof window !== 'undefined') {
+if (isBrowser && typeof module == 'undefined') {
   window.Sniffr = new Sniffr()
   window.Sniffr.sniff(navigator.userAgent);
 }

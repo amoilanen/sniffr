@@ -16,7 +16,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Device = exports.OS = exports.Browser = void 0;
+exports.RecognizedBrowser = exports.Device = exports.OS = exports.Browser = void 0;
 var Browser;
 (function (Browser) {
     Browser["Firefox"] = "firefox";
@@ -152,6 +152,7 @@ function determineProperty(matchers, userAgent) {
     });
     return recognizedProperty;
 }
+var isBrowser = typeof window !== 'undefined';
 var Sniffr = /** @class */ (function () {
     function Sniffr() {
         this.os = UnknownProperty;
@@ -159,7 +160,6 @@ var Sniffr = /** @class */ (function () {
         this.browser = UnknownProperty;
     }
     Sniffr.prototype.sniff = function (userAgentString) {
-        var isBrowser = typeof window !== 'undefined';
         var fallbackUserAgent = isBrowser ? navigator.userAgent : '';
         var userAgent = (userAgentString || fallbackUserAgent).toLowerCase();
         this.os = determineProperty(osMatchers, userAgent);
@@ -170,7 +170,18 @@ var Sniffr = /** @class */ (function () {
     return Sniffr;
 }());
 exports.default = Sniffr;
-if (typeof window !== 'undefined') {
+exports.RecognizedBrowser = {
+    os: UnknownProperty,
+    browser: UnknownProperty,
+    device: UnknownProperty
+};
+if (isBrowser) {
+    var result = new Sniffr().sniff(navigator.userAgent);
+    exports.RecognizedBrowser.os = result.os;
+    exports.RecognizedBrowser.device = result.device;
+    exports.RecognizedBrowser.browser = result.browser;
+}
+if (isBrowser && typeof module == 'undefined') {
     window.Sniffr = new Sniffr();
     window.Sniffr.sniff(navigator.userAgent);
 }

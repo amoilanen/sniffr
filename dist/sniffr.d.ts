@@ -37,18 +37,24 @@ export declare enum Device {
     XBox = "xbox",
     Blackberry = "blackberry"
 }
-export interface RecognizedProperty<T> {
+export interface RecognizedBrowserProperty<T> {
     name: T | 'Unknown';
     version: number[];
     versionString: string | 'Unknown';
 }
+export interface RecognizedBrowser {
+    os: RecognizedBrowserProperty<OS>;
+    browser: RecognizedBrowserProperty<Browser>;
+    device: RecognizedBrowserProperty<Device>;
+}
 export default class Sniffr {
-    os: RecognizedProperty<OS>;
-    device: RecognizedProperty<Device>;
-    browser: RecognizedProperty<Browser>;
+    os: RecognizedBrowserProperty<OS>;
+    device: RecognizedBrowserProperty<Device>;
+    browser: RecognizedBrowserProperty<Browser>;
     constructor();
     sniff(userAgentString?: string): this;
 }
+export declare const RecognizedBrowser: RecognizedBrowser;
 declare global {
     interface Window {
         Sniffr: Sniffr;

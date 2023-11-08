@@ -8,7 +8,11 @@
     "strict": true,
     "esModuleInterop": true,
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
+    "spec",
     "node_modules",
     "dist"
   ]
