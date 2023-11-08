@@ -4,6 +4,8 @@ Browser, OS and device detection based on the available user agent string. Can b
 
 >it's very rarely a good idea to use user agent sniffing. You can almost always find a better, more broadly compatible way to solve your problem! [MDN: Browser detection using the user agent](https://developer.mozilla.org/en-US/docs/Browser_detection_using_the_user_agent)
 
+> Note: Sniffr is written in Typescript and includes all the necessary typings, can be used both in JavaScript and Typescript projects
+
 ## Why use it
 
 In case some browser-specific issue cannot be fixed uniformly across browsers we may need to perform some browser detection. For example, browser X crashes when function Y from library Z is used, so we have to detect when we are dealing with browser X and disable library Z.
@@ -71,7 +73,7 @@ in a browser.
 
 ### NPM
 
-The library is can be directly used in a browser, no server-side code is run. Sniffr is written in Typescript and includes all the necessary typings.
+The library is can be directly used in a browser, no server-side code is run.
 
 ```javascript
 import { RecognizedBrowser } from "sniffr"
@@ -112,9 +114,9 @@ if (Sniffr.os.name === "windows"
 
 ## API
 
-`RecognizedBrowser.os`: operating system
-`RecognizedBrowser.browser`: browser
-`RecognizedBrowser.device`: device
+* `RecognizedBrowser.os`: operating system
+* `RecognizedBrowser.browser`: browser
+* `RecognizedBrowser.device`: device
 
 `Sniffr.sniff` : function that expects a user agent string as an argument, it is called automatically in a browser
 
