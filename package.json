@@ -1,6 +1,6 @@
 {
   "name": "sniffr",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Browser, os and device detection",
   "main": "dist/sniffr.js",
   "types": "dist/sniffr.d.ts",
@@ -22,6 +22,9 @@
     "url": "https://github.com/amoilanen/sniffr.git"
   },
   "keywords": [
+    "user agent",
+    "user agent parsing",
+    "user agent detection",
     "browser detection",
     "os detection",
     "device detection",
