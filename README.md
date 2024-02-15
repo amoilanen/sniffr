@@ -64,9 +64,9 @@ npm install sniffr
 
 ### As a standalone script in a browser
 
-Hosted version (by jsDelivr) can be found here (replace the version number) https://cdn.jsdelivr.net/gh/amoilanen/sniffr@1.2.2/dist/sniffr.min.js
+Hosted version (by jsDelivr) can be found here (replace the version number) https://cdn.jsdelivr.net/gh/amoilanen/sniffr@1.3.2/dist/sniffr.standalone.min.js
 
-https://github.com/amoilanen/sniffr/blob/master/dist/sniffr.min.js is a downloadable minified version of the library to be used as a standalone script
+https://github.com/amoilanen/sniffr/blob/master/dist/sniffr.standalone.min.js is a downloadable minified version of the library to be used as a standalone script
 in a browser.
 
 ## How to use in a browser

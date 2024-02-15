@@ -1,4 +1,11 @@
-"use strict";
+(function() {
+/*
+ * Making sure that the generate code can be loaded as standalone script in an older browser without module bundler
+ */
+var exports = {};
+if (typeof window !== 'undefined') {
+  exports = window.exports || {};
+}"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -180,3 +187,4 @@ if (isBrowser && typeof module == 'undefined') {
     window.Sniffr = new Sniffr();
     window.Sniffr.sniff(navigator.userAgent);
 }
+})();
