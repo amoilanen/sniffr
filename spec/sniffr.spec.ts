@@ -1,4 +1,4 @@
-import Sniffr, {OS, Browser, Device} from '../src/sniffr'
+import Sniffr, {OS, Browser, Device} from '../src/sniffr';
 
 /*
  * Some user agent strings are taken from http://www.useragentstring.com
@@ -26,29 +26,29 @@ describe('sniffr', function() {
 
   // Mock User-Agent Client Hints API for testing
   function mockUserAgentData(hintsData: any) {
-    const originalUserAgentData = (navigator as any).userAgentData
+    const originalUserAgentData = (navigator as any).userAgentData;
     Object.defineProperty(navigator, 'userAgentData', {
       value: hintsData,
       writable: true,
       configurable: true,
       enumerable: true
-    })
+    });
     return () => {
       if (originalUserAgentData === undefined) {
         Object.defineProperty(navigator, 'userAgentData', {
           value: undefined,
           writable: true,
           configurable: true
-        })
+        });
       } else {
         Object.defineProperty(navigator, 'userAgentData', {
           value: originalUserAgentData,
           writable: true,
           configurable: true,
           enumerable: true
-        })
+        });
       }
-    }
+    };
   }
 
   function property(name: string, versionString: string): ExpectedProperty {
@@ -72,7 +72,7 @@ describe('sniffr', function() {
   }
 
   function os(name: string, versionString: string): ExpectedProperty {
-    return property(name, versionString)
+    return property(name, versionString);
   }
 
   function browser(name: string, versionString: string): ExpectedProperty {
@@ -104,26 +104,26 @@ describe('sniffr', function() {
 
       if (expectations.os) {
         it('it should recognize os', () => {
-          expect(sniffer.os.name).toEqual(expectations.os?.name)
-          expect(sniffer.os.version).toEqual(expectations.os?.version)
-          expect(sniffer.os.versionString).toEqual(expectations.os?.versionString)
-        })
+          expect(sniffer.os.name).toEqual(expectations.os?.name);
+          expect(sniffer.os.version).toEqual(expectations.os?.version);
+          expect(sniffer.os.versionString).toEqual(expectations.os?.versionString);
+        });
       }
 
       if (expectations.browser) {
         it('it should recognize browser', () => {
-          expect(sniffer.browser.name).toEqual(expectations.browser?.name)
-          expect(sniffer.browser.version).toEqual(expectations.browser?.version)
-          expect(sniffer.browser.versionString).toEqual(expectations.browser?.versionString)
-        })
+          expect(sniffer.browser.name).toEqual(expectations.browser?.name);
+          expect(sniffer.browser.version).toEqual(expectations.browser?.version);
+          expect(sniffer.browser.versionString).toEqual(expectations.browser?.versionString);
+        });
       }
 
       if (expectations.device) {
         it('it should recognize device', () => {
-          expect(sniffer.device.name).toEqual(expectations.device?.name)
-          expect(sniffer.device.version).toEqual(expectations.device?.version)
-          expect(sniffer.device.versionString).toEqual(expectations.device?.versionString)
-        })
+          expect(sniffer.device.name).toEqual(expectations.device?.name);
+          expect(sniffer.device.version).toEqual(expectations.device?.version);
+          expect(sniffer.device.versionString).toEqual(expectations.device?.versionString);
+        });
       }
     });
   }
@@ -191,7 +191,7 @@ describe('sniffr', function() {
       'Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20140319 Firefox/24.0 Iceweasel/24.4.0');
     shouldDetect({os: os('windows', '10.0'), browser: browser('firefox', '42.0')},
       'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0');
-    shouldDetect({os: os('ios', '13.3.1'), browser: browser("firefox", "25.1") },
+    shouldDetect({os: os('ios', '13.3.1'), browser: browser('firefox', '25.1') },
       'Mozilla/5.0 (iPhone; CPU OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/25.1  Mobile/15E148 Safari/605.1.15');
     shouldDetect({os: os('windows', '10.0'), browser: browser('firefox', '136.')},
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.');
@@ -211,9 +211,9 @@ describe('sniffr', function() {
     shouldDetect({os: os('windows', '10.0'), browser: browser('chrome', '118.0.0.0')},
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.3');
     shouldDetect({os: os('macos', '10.15.7'), browser: browser('chrome', '118.0.0.0')},
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36')
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36');
     shouldDetect({os: os('windows', '10.0'), browser: browser('chrome', '118.0.0.0')},
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36')
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36');
     shouldDetect({os: os('windows', '6.2'), browser: browser('chrome', '32.0.1667.0')},
       'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36');
     shouldDetect({os: os('macos', '10.8.3'), browser: browser('chrome', '27.0.1453.93')},
@@ -509,18 +509,18 @@ describe('sniffr', function() {
               { brand: 'Not_A Brand', version: '24.0.0.0' }
             ]
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints()
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints();
 
-        expect(sniffer.browser.name).toEqual(Browser.Chrome)
-        expect(sniffer.browser.versionString).toEqual('131.0.0.0')
-        expect(sniffer.os.name).toEqual(OS.Windows)
-        expect(sniffer.os.versionString).toEqual('10.0')
+        expect(sniffer.browser.name).toEqual(Browser.Chrome);
+        expect(sniffer.browser.versionString).toEqual('131.0.0.0');
+        expect(sniffer.os.name).toEqual(OS.Windows);
+        expect(sniffer.os.versionString).toEqual('10.0');
 
-        restore()
-      })
+        restore();
+      });
     });
 
     describe('async sniffing with UA hints - Safari on macOS', function() {
@@ -540,18 +540,18 @@ describe('sniffr', function() {
               { brand: 'Safari', version: '18.2' }
             ]
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints()
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints();
 
-        expect(sniffer.browser.name).toEqual(Browser.Safari)
-        expect(sniffer.browser.versionString).toEqual('18.2')
-        expect(sniffer.os.name).toEqual(OS.MacOS)
-        expect(sniffer.os.versionString).toEqual('14.7')
+        expect(sniffer.browser.name).toEqual(Browser.Safari);
+        expect(sniffer.browser.versionString).toEqual('18.2');
+        expect(sniffer.os.name).toEqual(OS.MacOS);
+        expect(sniffer.os.versionString).toEqual('14.7');
 
-        restore()
-      })
+        restore();
+      });
     });
 
     describe('async sniffing with UA hints - Firefox on Linux', function() {
@@ -571,17 +571,17 @@ describe('sniffr', function() {
               { brand: 'Firefox', version: '131.0' }
             ]
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints()
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints();
 
-        expect(sniffer.browser.name).toEqual(Browser.Firefox)
-        expect(sniffer.browser.versionString).toEqual('131.0')
-        expect(sniffer.os.name).toEqual(OS.Linux)
+        expect(sniffer.browser.name).toEqual(Browser.Firefox);
+        expect(sniffer.browser.versionString).toEqual('131.0');
+        expect(sniffer.os.name).toEqual(OS.Linux);
 
-        restore()
-      })
+        restore();
+      });
     });
 
     describe('async sniffing with UA hints - Edge on Windows', function() {
@@ -603,18 +603,18 @@ describe('sniffr', function() {
               { brand: 'Chromium', version: '131.0.2903.99' }
             ]
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints()
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints();
 
-        expect(sniffer.browser.name).toEqual(Browser.Edge)
-        expect(sniffer.browser.versionString).toEqual('131.0.2903.99')
-        expect(sniffer.os.name).toEqual(OS.Windows)
-        expect(sniffer.os.versionString).toEqual('11.0')
+        expect(sniffer.browser.name).toEqual(Browser.Edge);
+        expect(sniffer.browser.versionString).toEqual('131.0.2903.99');
+        expect(sniffer.os.name).toEqual(OS.Windows);
+        expect(sniffer.os.versionString).toEqual('11.0');
 
-        restore()
-      })
+        restore();
+      });
     });
 
     describe('async sniffing with UA hints - Device detection', function() {
@@ -635,16 +635,16 @@ describe('sniffr', function() {
             ],
             formFactors: ['mobile']
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints()
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints();
 
-        expect(sniffer.device.name).toEqual(Device.iPhone)
-        expect(sniffer.os.name).toEqual(OS.iOS)
+        expect(sniffer.device.name).toEqual(Device.iPhone);
+        expect(sniffer.os.name).toEqual(OS.iOS);
 
-        restore()
-      })
+        restore();
+      });
 
       it('should detect iPad from UA hints', async () => {
         const restore = mockUserAgentData({
@@ -663,29 +663,29 @@ describe('sniffr', function() {
             ],
             formFactors: ['tablet']
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints()
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints();
 
-        expect(sniffer.device.name).toEqual(Device.iPad)
+        expect(sniffer.device.name).toEqual(Device.iPad);
 
-        restore()
-      })
+        restore();
+      });
     });
 
     describe('async sniffing with UA hints API unavailable (fallback to user agent string)', function() {
       it('should fallback to user agent string when UA hints not supported', async () => {
-        const restore = mockUserAgentData(undefined)
+        const restore = mockUserAgentData(undefined);
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36')
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36');
 
-        expect(sniffer.browser.name).toEqual(Browser.Chrome)
-        expect(sniffer.os.name).toEqual(OS.Windows)
+        expect(sniffer.browser.name).toEqual(Browser.Chrome);
+        expect(sniffer.os.name).toEqual(OS.Windows);
 
-        restore()
-      })
+        restore();
+      });
 
       it('should handle rejected high entropy values gracefully', async () => {
         const restore = mockUserAgentData({
@@ -695,39 +695,39 @@ describe('sniffr', function() {
           mobile: false,
           platform: 'Windows',
           getHighEntropyValues: async () => {
-            throw new Error('User denied high entropy values')
+            throw new Error('User denied high entropy values');
           }
-        })
+        });
 
-        const sniffer = new Sniffr()
-        await sniffer.sniffHints('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36')
+        const sniffer = new Sniffr();
+        await sniffer.sniffHints('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36');
 
         // Should still work with fallback
-        expect(sniffer.browser.name).toEqual(Browser.Chrome)
-        expect(sniffer.os.name).toEqual(OS.Windows)
+        expect(sniffer.browser.name).toEqual(Browser.Chrome);
+        expect(sniffer.os.name).toEqual(OS.Windows);
 
-        restore()
-      })
+        restore();
+      });
     });
 
     describe('backward compatibility - sync sniff() method still works', function() {
       it('should work with traditional sync sniff() method', () => {
-        const sniffer = new Sniffr()
-        sniffer.sniff('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36')
+        const sniffer = new Sniffr();
+        sniffer.sniff('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36');
 
-        expect(sniffer.browser.name).toEqual(Browser.Chrome)
-        expect(sniffer.os.name).toEqual(OS.Windows)
-        expect(sniffer.browser.version).toContain(118)
-        expect(sniffer.os.version).toContain(10)
-      })
+        expect(sniffer.browser.name).toEqual(Browser.Chrome);
+        expect(sniffer.os.name).toEqual(OS.Windows);
+        expect(sniffer.browser.version).toContain(118);
+        expect(sniffer.os.version).toContain(10);
+      });
 
       it('should use sync sniff() with provided user agent strings', () => {
-        const sniffer = new Sniffr()
-        sniffer.sniff('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.1')
+        const sniffer = new Sniffr();
+        sniffer.sniff('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.1');
 
-        expect(sniffer.browser.name).toEqual(Browser.Safari)
-        expect(sniffer.os.name).toEqual(OS.MacOS)
-      })
+        expect(sniffer.browser.name).toEqual(Browser.Safari);
+        expect(sniffer.os.name).toEqual(OS.MacOS);
+      });
     });
 
     describe('priority - UA hints should be preferred over fallback', function() {
@@ -745,18 +745,18 @@ describe('sniffr', function() {
               { brand: 'Google Chrome', version: '131.0.0.0' }
             ]
           })
-        })
+        });
 
-        const sniffer = new Sniffr()
+        const sniffer = new Sniffr();
         // Note: NOT passing a UA string - hints should be used
-        await sniffer.sniffHints()
+        await sniffer.sniffHints();
 
         // Should detect from hints
-        expect(sniffer.os.name).toEqual(OS.Windows)
-        expect(sniffer.browser.name).toEqual(Browser.Chrome)
+        expect(sniffer.os.name).toEqual(OS.Windows);
+        expect(sniffer.browser.name).toEqual(Browser.Chrome);
 
-        restore()
-      })
+        restore();
+      });
     });
   });
 });

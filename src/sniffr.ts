@@ -87,7 +87,7 @@ const browserMatchers: [RegExp, Browser][] = [
   [/edg\/([\.\d]+)/, Browser.Edge],
   [/yabrowser\/([\.\d]+)/, Browser.Yandex],
   [/seamonkey\/([\.\d]+)/, Browser.SeaMonkey],
-]
+];
 
 const osMatchers: [RegExp, OS][] = [
   [/cros\s*\S+\s*([\.\_\d]+)/, OS.ChromeOS],
@@ -105,7 +105,7 @@ const osMatchers: [RegExp, OS][] = [
   [/blackberry/, OS.BlackberryOS],
   [/bb\d+/, OS.BlackberryOS],
   [/rim.*?os\s*([\.\_\d]+)/, OS.BlackberryOS]
-]
+];
 
 const deviceMatchers: [RegExp, Device][] = [
   [/ipad/, Device.iPad],
@@ -119,14 +119,14 @@ const deviceMatchers: [RegExp, Device][] = [
   [/ sm\-/, Device.Galaxy],
   [/xbox/, Device.XBox],
   [/(?:bb\d+)|(?:blackberry)|(?: rim )/, Device.Blackberry]
-]
+];
 
-const Unknown = 'Unknown'
+const Unknown = 'Unknown';
 const UnknownProperty: RecognizedBrowserProperty<any> = {
   name: Unknown,
   version: [],
   versionString: Unknown
-}
+};
 
 export interface RecognizedBrowserProperty<T> {
   name: T | 'Unknown'
@@ -156,32 +156,32 @@ function parseVersion(versionString: string) {
     return parseInt(versionPart);
   }).filter(versionPart =>
     !isNaN(versionPart)
-  )
+  );
 }
 
 function determineProperty<T>(matchers: [RegExp, T][], userAgent: string): RecognizedBrowserProperty<T> {
-  const recognizedProperty: RecognizedBrowserProperty<T> = {...UnknownProperty}
+  const recognizedProperty: RecognizedBrowserProperty<T> = {...UnknownProperty};
   matchers.forEach(function(matcher) {
-    const regex = matcher[0]
-    const matchedValue = matcher[1]
-    const match = userAgent.match(regex)
+    const regex = matcher[0];
+    const matchedValue = matcher[1];
+    const match = userAgent.match(regex);
 
     if (match) {
       recognizedProperty.name = matchedValue;
 
       if (match[2]) {
-        recognizedProperty.versionString = match[2]
-        recognizedProperty.version = []
+        recognizedProperty.versionString = match[2];
+        recognizedProperty.version = [];
       } else if (match[1]) {
-        recognizedProperty.versionString = match[1].replace(/_/g, '.')
-        recognizedProperty.version = parseVersion(match[1])
+        recognizedProperty.versionString = match[1].replace(/_/g, '.');
+        recognizedProperty.version = parseVersion(match[1]);
       } else {
-        recognizedProperty.versionString = Unknown
-        recognizedProperty.version = []
+        recognizedProperty.versionString = Unknown;
+        recognizedProperty.version = [];
       }
     }
   });
-  return recognizedProperty
+  return recognizedProperty;
 }
 
 declare global {
@@ -192,11 +192,11 @@ declare global {
 
 async function getUAHintsData(): Promise<UAHintsData | null> {
   if (!navigator || !navigator.userAgentData) {
-    return null
+    return null;
   }
 
   try {
-    const uaData = navigator.userAgentData
+    const uaData = navigator.userAgentData;
     const hints = await uaData.getHighEntropyValues([
       'platform',
       'platformVersion',
@@ -204,7 +204,7 @@ async function getUAHintsData(): Promise<UAHintsData | null> {
       'model',
       'fullVersionList',
       'formFactors'
-    ])
+    ]);
     
     return {
       platform: hints.platform,
@@ -215,114 +215,114 @@ async function getUAHintsData(): Promise<UAHintsData | null> {
       brands: uaData.brands,
       fullVersionList: hints.fullVersionList,
       formFactors: hints.formFactors
-    }
+    };
   } catch (error) {
     // If high entropy values are rejected or not available, return null
     // This preserves privacy and provides a graceful fallback
-    return null
+    return null;
   }
 }
 
 function detectBrowserFromHints(hints: UAHintsData): RecognizedBrowserProperty<Browser> | null {
   if (!hints.fullVersionList || hints.fullVersionList.length === 0) {
-    return null
+    return null;
   }
 
   for (const brandInfo of hints.fullVersionList) {
-    const brand = brandInfo.brand.toLowerCase()
-    const version = brandInfo.version
+    const brand = brandInfo.brand.toLowerCase();
+    const version = brandInfo.version;
 
     if (brand.includes('microsoft edge') || brand === 'edg') {
       return {
         name: Browser.Edge,
         versionString: version,
         version: parseVersion(version)
-      }
+      };
     } else if (brand.includes('chrome') && !brand.includes('chromium')) {
       return {
         name: Browser.Chrome,
         versionString: version,
         version: parseVersion(version)
-      }
+      };
     } else if (brand === 'chromium') {
       // Continue to next as chromium is not a specific browser
-      continue
+      continue;
     } else if (brand.includes('safari') && !brand.includes('chrome')) {
       return {
         name: Browser.Safari,
         versionString: version,
         version: parseVersion(version)
-      }
+      };
     } else if (brand.includes('firefox')) {
       return {
         name: Browser.Firefox,
         versionString: version,
         version: parseVersion(version)
-      }
+      };
     } else if (brand.includes('opera')) {
       return {
         name: Browser.Opera,
         versionString: version,
         version: parseVersion(version)
-      }
+      };
     }
   }
 
-  return null
+  return null;
 }
 
 function detectOSFromHints(hints: UAHintsData): RecognizedBrowserProperty<OS> | null {
   if (!hints.platform) {
-    return null
+    return null;
   }
 
-  const platform = hints.platform.toLowerCase()
-  const platformVersion = hints.platformVersion || ''
+  const platform = hints.platform.toLowerCase();
+  const platformVersion = hints.platformVersion || '';
 
   if (platform === 'windows') {
     return {
       name: OS.Windows,
       versionString: platformVersion || 'Unknown',
       version: platformVersion ? parseVersion(platformVersion) : []
-    }
+    };
   } else if (platform === 'macos') {
     return {
       name: OS.MacOS,
       versionString: platformVersion || 'Unknown',
       version: platformVersion ? parseVersion(platformVersion) : []
-    }
+    };
   } else if (platform === 'linux') {
     return {
       name: OS.Linux,
       versionString: platformVersion || 'Unknown',
       version: platformVersion ? parseVersion(platformVersion) : []
-    }
+    };
   } else if (platform === 'android') {
     return {
       name: OS.Android,
       versionString: platformVersion || 'Unknown',
       version: platformVersion ? parseVersion(platformVersion) : []
-    }
+    };
   } else if (platform === 'ios') {
     return {
       name: OS.iOS,
       versionString: platformVersion || 'Unknown',
       version: platformVersion ? parseVersion(platformVersion) : []
-    }
+    };
   } else if (platform === 'chromeos') {
     return {
       name: OS.ChromeOS,
       versionString: platformVersion || 'Unknown',
       version: platformVersion ? parseVersion(platformVersion) : []
-    }
+    };
   }
 
-  return null
+  return null;
 }
 
 function detectDeviceFromHints(hints: UAHintsData): RecognizedBrowserProperty<Device> | null {
   if (hints.formFactors && hints.formFactors.length > 0) {
-    const formFactor = hints.formFactors[0].toLowerCase()
+    const formFactor = hints.formFactors[0].toLowerCase();
     
     if (formFactor === 'tablet') {
       if (hints.platform?.toLowerCase() === 'ios') {
@@ -330,7 +330,7 @@ function detectDeviceFromHints(hints: UAHintsData): RecognizedBrowserProperty<De
           name: Device.iPad,
           versionString: 'Unknown',
           version: []
-        }
+        };
       }
     } else if (formFactor === 'mobile') {
       if (hints.platform?.toLowerCase() === 'ios') {
@@ -338,61 +338,61 @@ function detectDeviceFromHints(hints: UAHintsData): RecognizedBrowserProperty<De
           name: Device.iPhone,
           versionString: 'Unknown',
           version: []
-        }
+        };
       }
     }
   }
 
   if (hints.model) {
-    const model = hints.model.toLowerCase()
+    const model = hints.model.toLowerCase();
     
     if (model.includes('iphone')) {
       return {
         name: Device.iPhone,
         versionString: 'Unknown',
         version: []
-      }
+      };
     } else if (model.includes('ipad')) {
       return {
         name: Device.iPad,
         versionString: 'Unknown',
         version: []
-      }
+      };
     } else if (model.includes('nexus')) {
       return {
         name: Device.Nexus,
         versionString: 'Unknown',
         version: []
-      }
+      };
     } else if (model.includes('galaxy')) {
       if (model.includes('nexus')) {
         return {
           name: Device.GalaxyNexus,
           versionString: 'Unknown',
           version: []
-        }
+        };
       }
       return {
         name: Device.Galaxy,
         versionString: 'Unknown',
         version: []
-      }
+      };
     }
   }
 
-  return null
+  return null;
 }
 
-const isBrowser = typeof window !== 'undefined'
+const isBrowser = typeof window !== 'undefined';
 
 export default class Sniffr {
-  os: RecognizedBrowserProperty<OS>
-  device: RecognizedBrowserProperty<Device>
-  browser: RecognizedBrowserProperty<Browser>
+  os: RecognizedBrowserProperty<OS>;
+  device: RecognizedBrowserProperty<Device>;
+  browser: RecognizedBrowserProperty<Browser>;
   constructor() {
-    this.os = UnknownProperty
-    this.device = UnknownProperty
-    this.browser = UnknownProperty
+    this.os = UnknownProperty;
+    this.device = UnknownProperty;
+    this.browser = UnknownProperty;
   }
   
   /**
@@ -401,12 +401,12 @@ export default class Sniffr {
    * For more accurate detection, use sniffHints() if in a browser.
    */
   sniff(userAgentString?: string): this {
-    const fallbackUserAgent = isBrowser ? navigator.userAgent : ''
-    const userAgent = (userAgentString || fallbackUserAgent).toLowerCase()
+    const fallbackUserAgent = isBrowser ? navigator.userAgent : '';
+    const userAgent = (userAgentString || fallbackUserAgent).toLowerCase();
 
-    this.os = determineProperty(osMatchers, userAgent)
-    this.device = determineProperty(deviceMatchers, userAgent)
-    this.browser = determineProperty(browserMatchers, userAgent)
+    this.os = determineProperty(osMatchers, userAgent);
+    this.device = determineProperty(deviceMatchers, userAgent);
+    this.browser = determineProperty(browserMatchers, userAgent);
     return this;
   }
 
@@ -417,24 +417,24 @@ export default class Sniffr {
    * If hints are not available (e.g., Firefox, privacy settings), falls back to user agent string.
    */
   async sniffHints(userAgentString?: string): Promise<this> {
-    const fallbackUserAgent = isBrowser ? navigator.userAgent : ''
-    const userAgent = (userAgentString || fallbackUserAgent).toLowerCase()
+    const fallbackUserAgent = isBrowser ? navigator.userAgent : '';
+    const userAgent = (userAgentString || fallbackUserAgent).toLowerCase();
 
-    let hintsData: UAHintsData | null = null
+    let hintsData: UAHintsData | null = null;
     if (!userAgentString && (isBrowser || navigator?.userAgentData)) {
-      hintsData = await getUAHintsData()
+      hintsData = await getUAHintsData();
     }
     if (hintsData) {
-      const browserFromHints = detectBrowserFromHints(hintsData)
-      const osFromHints = detectOSFromHints(hintsData)
-      const deviceFromHints = detectDeviceFromHints(hintsData)
-      this.browser = browserFromHints || determineProperty(browserMatchers, userAgent)
-      this.os = osFromHints || determineProperty(osMatchers, userAgent)
-      this.device = deviceFromHints || determineProperty(deviceMatchers, userAgent)
+      const browserFromHints = detectBrowserFromHints(hintsData);
+      const osFromHints = detectOSFromHints(hintsData);
+      const deviceFromHints = detectDeviceFromHints(hintsData);
+      this.browser = browserFromHints || determineProperty(browserMatchers, userAgent);
+      this.os = osFromHints || determineProperty(osMatchers, userAgent);
+      this.device = deviceFromHints || determineProperty(deviceMatchers, userAgent);
     } else {
-      this.os = determineProperty(osMatchers, userAgent)
-      this.device = determineProperty(deviceMatchers, userAgent)
-      this.browser = determineProperty(browserMatchers, userAgent)
+      this.os = determineProperty(osMatchers, userAgent);
+      this.device = determineProperty(deviceMatchers, userAgent);
+      this.browser = determineProperty(browserMatchers, userAgent);
     }
     return this;
   }
@@ -444,20 +444,20 @@ export const RecognizedBrowser: RecognizedBrowser = {
   os: UnknownProperty,
   browser: UnknownProperty,
   device: UnknownProperty
-}
+};
 
 if (isBrowser) {
-  const sniffer = new Sniffr()
+  const sniffer = new Sniffr();
   sniffer.sniffHints().then(() => {
-    RecognizedBrowser.os = sniffer.os
-    RecognizedBrowser.device = sniffer.device
-    RecognizedBrowser.browser = sniffer.browser
+    RecognizedBrowser.os = sniffer.os;
+    RecognizedBrowser.device = sniffer.device;
+    RecognizedBrowser.browser = sniffer.browser;
   }).catch(() => {
-    const fallbackSniffer = new Sniffr().sniff(navigator.userAgent)
-    RecognizedBrowser.os = fallbackSniffer.os
-    RecognizedBrowser.device = fallbackSniffer.device
-    RecognizedBrowser.browser = fallbackSniffer.browser
-  })
+    const fallbackSniffer = new Sniffr().sniff(navigator.userAgent);
+    RecognizedBrowser.os = fallbackSniffer.os;
+    RecognizedBrowser.device = fallbackSniffer.device;
+    RecognizedBrowser.browser = fallbackSniffer.browser;
+  });
 }
 
 declare global {
@@ -465,8 +465,8 @@ declare global {
 }
 
 if (isBrowser && typeof module == 'undefined') {
-  window.Sniffr = new Sniffr()
+  window.Sniffr = new Sniffr();
   window.Sniffr.sniffHints().catch(() => {
-    window.Sniffr.sniff(navigator.userAgent)
-  })
+    window.Sniffr.sniff(navigator.userAgent);
+  });
 }

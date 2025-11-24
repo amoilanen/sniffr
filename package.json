@@ -41,14 +41,16 @@
     "url": "https://github.com/amoilanen/sniffr/issues"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.8",
-    "@typescript-eslint/eslint-plugin": "^8.48.0",
-    "@typescript-eslint/parser": "^8.48.0",
-    "eslint": "^8.57.1",
+    "@eslint/js": "^9.18.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.18.0",
     "jest": "^29.7.0",
-    "ts-jest": "^29.1.1",
-    "typescript": "^5.2.2",
-    "uglify-js": "^3.17.4"
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.3",
+    "uglify-js": "^3.19.2"
   },
   "homepage": "https://github.com/amoilanen/sniffr"
 }
