@@ -24,6 +24,33 @@ describe('sniffr', function() {
     sniffer = new Sniffr();
   });
 
+  // Mock User-Agent Client Hints API for testing
+  function mockUserAgentData(hintsData: any) {
+    const originalUserAgentData = (navigator as any).userAgentData
+    Object.defineProperty(navigator, 'userAgentData', {
+      value: hintsData,
+      writable: true,
+      configurable: true,
+      enumerable: true
+    })
+    return () => {
+      if (originalUserAgentData === undefined) {
+        Object.defineProperty(navigator, 'userAgentData', {
+          value: undefined,
+          writable: true,
+          configurable: true
+        })
+      } else {
+        Object.defineProperty(navigator, 'userAgentData', {
+          value: originalUserAgentData,
+          writable: true,
+          configurable: true,
+          enumerable: true
+        })
+      }
+    }
+  }
+
   function property(name: string, versionString: string): ExpectedProperty {
     let version = versionString.split('.').map(function(versionPart) {
       return parseInt(versionPart, 10);
@@ -457,6 +484,279 @@ describe('sniffr', function() {
 
     describe('should recognize default values for unknown user agent', function() {
       shouldDetect(defaultEnvironment, 'Unknown user agent string');
+    });
+  });
+
+  describe('User-Agent Client Hints API', function() {
+    describe('async sniffing with UA hints - Chrome/Edge on Windows', function() {
+      it('should detect browser, os and device from UA hints', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Google Chrome', version: '131' },
+            { brand: 'Chromium', version: '131' },
+            { brand: 'Not_A Brand', version: '24' }
+          ],
+          mobile: false,
+          platform: 'Windows',
+          getHighEntropyValues: async () => ({
+            platform: 'Windows',
+            platformVersion: '10.0',
+            architecture: 'x86',
+            model: '',
+            fullVersionList: [
+              { brand: 'Google Chrome', version: '131.0.0.0' },
+              { brand: 'Chromium', version: '131.0.0.0' },
+              { brand: 'Not_A Brand', version: '24.0.0.0' }
+            ]
+          })
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints()
+
+        expect(sniffer.browser.name).toEqual(Browser.Chrome)
+        expect(sniffer.browser.versionString).toEqual('131.0.0.0')
+        expect(sniffer.os.name).toEqual(OS.Windows)
+        expect(sniffer.os.versionString).toEqual('10.0')
+
+        restore()
+      })
+    });
+
+    describe('async sniffing with UA hints - Safari on macOS', function() {
+      it('should detect Safari browser and macOS from UA hints', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Safari', version: '18' }
+          ],
+          mobile: false,
+          platform: 'macOS',
+          getHighEntropyValues: async () => ({
+            platform: 'macOS',
+            platformVersion: '14.7',
+            architecture: 'arm64',
+            model: 'MacBook Pro',
+            fullVersionList: [
+              { brand: 'Safari', version: '18.2' }
+            ]
+          })
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints()
+
+        expect(sniffer.browser.name).toEqual(Browser.Safari)
+        expect(sniffer.browser.versionString).toEqual('18.2')
+        expect(sniffer.os.name).toEqual(OS.MacOS)
+        expect(sniffer.os.versionString).toEqual('14.7')
+
+        restore()
+      })
+    });
+
+    describe('async sniffing with UA hints - Firefox on Linux', function() {
+      it('should detect Firefox browser and Linux OS from UA hints', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Firefox', version: '131' }
+          ],
+          mobile: false,
+          platform: 'Linux',
+          getHighEntropyValues: async () => ({
+            platform: 'Linux',
+            platformVersion: '',
+            architecture: 'x86_64',
+            model: '',
+            fullVersionList: [
+              { brand: 'Firefox', version: '131.0' }
+            ]
+          })
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints()
+
+        expect(sniffer.browser.name).toEqual(Browser.Firefox)
+        expect(sniffer.browser.versionString).toEqual('131.0')
+        expect(sniffer.os.name).toEqual(OS.Linux)
+
+        restore()
+      })
+    });
+
+    describe('async sniffing with UA hints - Edge on Windows', function() {
+      it('should detect Edge browser from UA hints', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Microsoft Edge', version: '131' },
+            { brand: 'Chromium', version: '131' }
+          ],
+          mobile: false,
+          platform: 'Windows',
+          getHighEntropyValues: async () => ({
+            platform: 'Windows',
+            platformVersion: '11.0',
+            architecture: 'x86',
+            model: '',
+            fullVersionList: [
+              { brand: 'Microsoft Edge', version: '131.0.2903.99' },
+              { brand: 'Chromium', version: '131.0.2903.99' }
+            ]
+          })
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints()
+
+        expect(sniffer.browser.name).toEqual(Browser.Edge)
+        expect(sniffer.browser.versionString).toEqual('131.0.2903.99')
+        expect(sniffer.os.name).toEqual(OS.Windows)
+        expect(sniffer.os.versionString).toEqual('11.0')
+
+        restore()
+      })
+    });
+
+    describe('async sniffing with UA hints - Device detection', function() {
+      it('should detect iPhone from UA hints', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Safari', version: '18' }
+          ],
+          mobile: true,
+          platform: 'iOS',
+          getHighEntropyValues: async () => ({
+            platform: 'iOS',
+            platformVersion: '18.1',
+            architecture: 'arm64',
+            model: 'iPhone16,2',
+            fullVersionList: [
+              { brand: 'Safari', version: '18.1' }
+            ],
+            formFactors: ['mobile']
+          })
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints()
+
+        expect(sniffer.device.name).toEqual(Device.iPhone)
+        expect(sniffer.os.name).toEqual(OS.iOS)
+
+        restore()
+      })
+
+      it('should detect iPad from UA hints', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Safari', version: '18' }
+          ],
+          mobile: false,
+          platform: 'iOS',
+          getHighEntropyValues: async () => ({
+            platform: 'iOS',
+            platformVersion: '18.1',
+            architecture: 'arm64',
+            model: 'iPad12,2',
+            fullVersionList: [
+              { brand: 'Safari', version: '18.1' }
+            ],
+            formFactors: ['tablet']
+          })
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints()
+
+        expect(sniffer.device.name).toEqual(Device.iPad)
+
+        restore()
+      })
+    });
+
+    describe('async sniffing with UA hints API unavailable (fallback to user agent string)', function() {
+      it('should fallback to user agent string when UA hints not supported', async () => {
+        const restore = mockUserAgentData(undefined)
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36')
+
+        expect(sniffer.browser.name).toEqual(Browser.Chrome)
+        expect(sniffer.os.name).toEqual(OS.Windows)
+
+        restore()
+      })
+
+      it('should handle rejected high entropy values gracefully', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Google Chrome', version: '131' }
+          ],
+          mobile: false,
+          platform: 'Windows',
+          getHighEntropyValues: async () => {
+            throw new Error('User denied high entropy values')
+          }
+        })
+
+        const sniffer = new Sniffr()
+        await sniffer.sniffHints('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36')
+
+        // Should still work with fallback
+        expect(sniffer.browser.name).toEqual(Browser.Chrome)
+        expect(sniffer.os.name).toEqual(OS.Windows)
+
+        restore()
+      })
+    });
+
+    describe('backward compatibility - sync sniff() method still works', function() {
+      it('should work with traditional sync sniff() method', () => {
+        const sniffer = new Sniffr()
+        sniffer.sniff('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36')
+
+        expect(sniffer.browser.name).toEqual(Browser.Chrome)
+        expect(sniffer.os.name).toEqual(OS.Windows)
+        expect(sniffer.browser.version).toContain(118)
+        expect(sniffer.os.version).toContain(10)
+      })
+
+      it('should use sync sniff() with provided user agent strings', () => {
+        const sniffer = new Sniffr()
+        sniffer.sniff('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.1')
+
+        expect(sniffer.browser.name).toEqual(Browser.Safari)
+        expect(sniffer.os.name).toEqual(OS.MacOS)
+      })
+    });
+
+    describe('priority - UA hints should be preferred over fallback', function() {
+      it('should use UA hints when available and not fall back', async () => {
+        const restore = mockUserAgentData({
+          brands: [
+            { brand: 'Google Chrome', version: '131' }
+          ],
+          mobile: false,
+          platform: 'Windows',
+          getHighEntropyValues: async () => ({
+            platform: 'Windows',
+            platformVersion: '10.0',
+            fullVersionList: [
+              { brand: 'Google Chrome', version: '131.0.0.0' }
+            ]
+          })
+        })
+
+        const sniffer = new Sniffr()
+        // Note: NOT passing a UA string - hints should be used
+        await sniffer.sniffHints()
+
+        // Should detect from hints
+        expect(sniffer.os.name).toEqual(OS.Windows)
+        expect(sniffer.browser.name).toEqual(Browser.Chrome)
+
+        restore()
+      })
     });
   });
 });

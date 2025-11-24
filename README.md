@@ -85,7 +85,30 @@ if (RecognizedBrowser.os.name === "windows"
 }
 ```
 
-For backward compatibility purposes the following more wordy legacy usage pattern is also supported:
+#### Using User-Agent and Client Hints API (Recommended for improved accuracy)
+
+For better accuracy in modern browsers, use the async `sniffHints()` method which leverages the [User-Agent Client Hints API](https://developer.mozilla.org/en-US/docs/Web/API/User-Agent_Client_Hints_API):
+
+```javascript
+import Sniffr from "sniffr"
+
+const sniffr = new Sniffr()
+await sniffr.sniffHints()
+
+//If Windows and Firefox 28 or later
+if (sniffr.os.name === "windows"
+  && sniffr.browser.name === "firefox" && sniffr.browser.version[0] >= 28) {
+  //Apply some workaround
+}
+```
+
+The `sniffHints()` method automatically:
+- Uses User-Agent Client Hints API when available (Chrome, Edge, Opera, Brave, etc.)
+- Gracefully falls back to user agent string parsing for unsupported browsers (Firefox, Safari, etc.)
+- Provides more reliable OS, browser, and device detection
+
+For backward compatibility purposes the old `sniff` method is also supported. This one uses only the user agent string
+and ignored the Client Hints API:
 
 ```javascript
 import Sniffr from "sniffr"
@@ -114,11 +137,44 @@ if (Sniffr.os.name === "windows"
 
 ## API
 
+### `RecognizedBrowser` (module-level exports)
 * `RecognizedBrowser.os`: operating system
 * `RecognizedBrowser.browser`: browser
 * `RecognizedBrowser.device`: device
 
-`Sniffr.sniff` : function that expects a user agent string as an argument, it is called automatically in a browser
+### `Sniffr` class methods
+
+#### `sniff(userAgentString?: string): this`
+Synchronous method that detects browser, OS, and device information using user agent string parsing only.
+
+- **Usage**: Useful for backward compatibility and server-side usage
+- **Parameters**: Optional user agent string. If not provided, uses `navigator.userAgent` in browser
+- **Returns**: `this` (Sniffr instance for chaining)
+- **Supports**: All browsers
+
+Example:
+```javascript
+const sniffr = new Sniffr()
+sniffr.sniff()
+console.log(sniffr.browser.name)
+```
+
+#### `sniffHints(userAgentString?: string): Promise<this>`
+Asynchronous method that uses User-Agent Client Hints API when available for more accurate detection, with automatic fallback to user agent string parsing.
+
+- **Usage**: Recommended for browser environments where accuracy is important
+- **Parameters**: Optional user agent string. If not provided, attempts to fetch UA hints from the browser
+- **Returns**: `Promise<this>` (resolves to Sniffr instance)
+- **Supports**: All browsers (with graceful fallback for unsupported ones)
+- **Privacy**: When UA hints are unavailable or rejected by the browser, falls back to user agent string
+- **Availability**: Automatically detects User-Agent Client Hints API support; no browser checks needed
+
+Example:
+```javascript
+const sniffr = new Sniffr()
+await sniffr.sniffHints()
+console.log(sniffr.browser.name)
+```
 
 ## How to use on the server side
 
