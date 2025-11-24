@@ -1,0 +1,25 @@
+{
+  "name": "sniffr-node-example",
+  "version": "1.0.0",
+  "description": "Simple Node.js/Express example using Sniffr for server-side user agent detection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node -e \"require('fs').watch('.', () => process.exit()); require('./server.js')\""
+  },
+  "keywords": [
+    "sniffr",
+    "user-agent",
+    "browser-detection",
+    "os-detection"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sniffr": "file:../../"
+  },
+  "devDependencies": {},
+  "description": "Example showing how to use Sniffr on the server side with Express"
+}
+
