@@ -73,7 +73,7 @@ in a browser.
 
 ### NPM
 
-The library is can be directly used in a browser, no server-side code is run.
+The library can be directly used in a browser, no server-side code is run.
 
 ```javascript
 import { RecognizedBrowser } from "sniffr"
