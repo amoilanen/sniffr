@@ -17,10 +17,32 @@ This example shows how to use Sniffr on the server side to detect browser, OS, a
 
 ## Installation
 
-This example uses the local Sniffr version by default (via `file:../../` in package.json). This makes it easy to test changes to Sniffr immediately.
+### Using npm pack (Recommended for Testing)
+
+This approach creates a realistic tarball package like users would receive from npm:
 
 ```bash
+# From the project root
+npm run dist
+npm pack
+
+# Then in the directory of the example
 npm install
+npm install ../../sniffr-*.tgz
+npm start
+```
+
+### Using file:// protocol (For Rapid Development)
+
+For faster iteration during development, you can use the file protocol:
+
+```bash
+# From the project root
+npm run dist
+
+# Then in this directory
+npm install
+npm install file:../../
 npm start
 ```
 
@@ -31,7 +53,7 @@ To use the published version from NPM instead, update `package.json`:
 ```json
 "dependencies": {
   "express": "^4.18.2",
-  "sniffr": "^1.4.0"  // Change from "file:../../"
+  "sniffr": "^1.4.0"  // Change from "file:../../" or the tarball
 }
 ```
 
@@ -122,21 +144,35 @@ When developing Sniffr, follow these steps to test your changes:
 
 1. **Make changes to Sniffr** source code (`src/sniffr.ts`)
 
-2. **Build the library** (from the Sniffr root directory):
+2. **Build and pack the library** (from the Sniffr root directory):
    ```bash
    npm run dist
+   npm pack
    ```
 
-3. **Test with this example**:
+3. **Update this example with the new tarball** (from this directory):
    ```bash
-   cd examples/node-express-app
+   npm install ../../sniffr-*.tgz
    npm start
    ```
 
-4. **Make requests to test your changes**:
+4. **Test your changes**:
    ```bash
    curl "http://localhost:3000/detect?userAgent=your-test-agent"
    ```
+
+### Alternative: Using file:// for Rapid Development
+
+If you prefer faster iteration without repacking:
+
+```bash
+# Build only (from root)
+npm run dist
+
+# Update link (from this directory)
+npm install file:../../
+npm start
+```
 
 ## Troubleshooting
 
@@ -144,13 +180,16 @@ When developing Sniffr, follow these steps to test your changes:
 
 If you get "Cannot find module 'sniffr'":
 1. Make sure you've run `npm install` in this directory
-2. If using local version, ensure you've built Sniffr and linked it properly
+2. If using tarball: ensure you've run `npm install ../../sniffr-*.tgz`
+3. If using file protocol: ensure you've run `npm install file:../../`
 
 ### Version mismatch
 
 If the local changes aren't reflected:
 1. Rebuild Sniffr: `npm run dist` (from parent directory)
-2. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+2. If using tarball: `npm pack` then `npm install ../../sniffr-*.tgz`
+3. If using file protocol: Restart the server (Node caches require() calls)
+4. Clear node_modules if needed: `rm -rf node_modules && npm install && npm install ../../sniffr-*.tgz`
 
 ## Project Structure
 

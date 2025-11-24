@@ -17,10 +17,34 @@ This example shows how to use Sniffr in a React application to detect and displa
 
 ## Installation
 
-This example uses the local Sniffr version by default (via `file:../../` in package.json). This makes it easy to test changes to Sniffr immediately.
+### Using npm pack (Recommended for Testing)
+
+This approach creates a realistic tarball package like users would receive from npm:
 
 ```bash
+# From the project root
+npm run dist
+npm pack
+
+# Then in this directory
 npm install
+npm install ../../sniffr-*.tgz
+npm start
+```
+
+This will start the development server on `http://localhost:3000`
+
+### Using file:// protocol (For Rapid Development)
+
+For faster iteration during development, you can use the file protocol:
+
+```bash
+# From the project root
+npm run dist
+
+# Then in this directory
+npm install
+npm install file:../../
 npm start
 ```
 
@@ -35,7 +59,7 @@ To use the published version from NPM instead, update `package.json`:
   "react": "^18.2.0",
   "react-dom": "^18.2.0",
   "react-scripts": "5.0.1",
-  "sniffr": "^1.4.0"  // Change from "file:../../"
+  "sniffr": "^1.4.0"  // Change from "file:../../" or the tarball
 }
 ```
 
@@ -95,17 +119,18 @@ When developing Sniffr, follow these steps to test your changes:
 
 1. **Make changes to Sniffr** source code (`src/sniffr.ts`)
 
-2. **Build the library** (from the Sniffr root directory):
+2. **Build and pack the library** (from the Sniffr root directory):
    ```bash
    npm run dist
+   npm pack
    ```
 
-3. **Update the link** (from this directory):
+3. **Update this example with the new tarball** (from this directory):
    ```bash
-   npm link ../../
+   npm install ../../sniffr-*.tgz
    ```
 
-4. **Start the dev server**:
+4. **Restart the dev server**:
    ```bash
    npm start
    ```
@@ -115,13 +140,22 @@ When developing Sniffr, follow these steps to test your changes:
    - Verify that your changes are reflected in the detection results
    - Open browser DevTools Console to see any errors
 
-6. **Clear cache if needed**:
-   ```bash
-   rm -rf node_modules
-   npm install
-   npm link ../../
-   npm start
-   ```
+### Alternative: Using file:// for Rapid Development
+
+If you prefer faster iteration without repacking:
+
+```bash
+# Build only (from root)
+npm run dist
+
+# Update link (from this directory)
+npm install file:../../
+npm start
+```
+
+With this approach:
+- Hot reload works during development
+- Hard refresh browser: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac) after rebuilds
 
 ## Browser Compatibility
 
@@ -187,15 +221,17 @@ Responsive styling with:
 
 If you get "Cannot find module 'sniffr'":
 1. Make sure you've run `npm install` in this directory
-2. If using local version, ensure you've built Sniffr and linked it properly
-3. Try clearing node_modules and reinstalling
+2. If using tarball: ensure you've run `npm install ../../sniffr-*.tgz`
+3. If using file protocol: ensure you've run `npm install file:../../`
+4. Try clearing node_modules and reinstalling
 
 ### Changes not reflecting
 
 If local Sniffr changes aren't showing up:
 1. Rebuild Sniffr: `npm run dist` (from parent directory)
-2. Refresh the browser (Cmd+Shift+R or Ctrl+Shift+R for hard refresh)
-3. If still not working, restart the dev server
+2. If using tarball: `npm pack` then `npm install ../../sniffr-*.tgz`
+3. If using file protocol: Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
+4. If still not working, restart the dev server
 
 ### Port 3000 already in use
 
